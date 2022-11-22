@@ -1,0 +1,9 @@
+/* extend base styles here */
+
+body {
+  @apply font-poppins text-gray-800/80;
+}
+
+p {
+  @apply pb-2;
+}

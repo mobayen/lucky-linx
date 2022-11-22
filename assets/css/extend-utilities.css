@@ -1,0 +1,5 @@
+/* extend utilities styles here */
+
+.my-class {
+  @apply bg-green-500 text-white/60 p-2 m-2;
+}
