@@ -2,16 +2,7 @@
 </script>
 
 <template>
-  <div>
-    <h1 class="text-xl bg-red-500 text-white/50 p-4 m-4">
-      Hello world!
-    </h1>
-
-    <h2 class="my-class">
-      Hey there
-    </h2>
-
-    <div class="p-4 m-4 w-full md:w-1/2">
+    <div>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, hic officia. Cupiditate, est tempore inventore nemo cumque delectus odit ipsam sapiente laudantium ab consectetur eligendi nisi explicabo minus iure asperiores?
       </p>
@@ -30,7 +21,6 @@
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, ex nobis obcaecati numquam molestias minima alias, earum atque eum, nisi ipsam deserunt! Porro, voluptatibus illo. Harum recusandae maxime iste earum!
       </p>
-    </div>
   </div>
 </template>
 

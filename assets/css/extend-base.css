@@ -1,9 +1,13 @@
 /* extend base styles here */
 
 body {
-  @apply font-poppins text-gray-800/80;
+  @apply font-Poppins text-gray-800/70 bg-amber-200/10;
 }
 
 p {
   @apply pb-2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-Merriweather;
 }

@@ -10,9 +10,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: [
+        Poppins: [
           'Poppins',
           'sans-serif'
+        ],
+        Merriweather: [
+          'Merriweather',
+          'serif'
         ]
       }
     },
