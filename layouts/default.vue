@@ -2,10 +2,9 @@
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtPage></NuxtPage>
-  </NuxtLayout>
+  <slot></slot>
 </template>
+
 
 <style scoped>
 </style>
