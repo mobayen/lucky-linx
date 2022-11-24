@@ -21,7 +21,7 @@ const links = [
       <!-- right -->
       <div class="flex">
         <div class="w-14 m-2">
-          <img src="ll-logo.png" alt="">
+          <img src="/ll-logo.png" alt="">
         </div>
         <div class="mx-2">
           <div class="text-3xl text-gray-700/80 font-Merriweather">
