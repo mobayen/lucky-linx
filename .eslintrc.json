@@ -1,9 +1,9 @@
 {
-  // "env": {
-  //   "browser": true,
-  //   "es2021": true,
-  //   "node": true
-  // },
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
   "extends": [
     "plugin:nuxt/recommended",
     // "plugin:vue/vue3-recommended",
@@ -11,7 +11,6 @@
     // "@vue/eslint-config-typescript/recommended",
     "@nuxtjs/eslint-config-typescript"
     // "plugin:@typescript-eslint/recommended",
-    // "plugin:vue/essential",
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -23,136 +22,26 @@
     "@typescript-eslint"
   ],
   "rules": {
-    // NOTE: Due to multiple v-model in Vue3 it's allowed to have v-model args
-    // "vue/no-v-model-argument": "off",
-    "no-console": "off"
-    ////
-    //// copy rules from menuify project
-    ////
-    // "vue/block-tag-newline": "warn",
-    // "vue/html-button-has-type": "warn",
-    // "vue/component-api-style": [
-    //   "error",
-    //   [
-    //     "script-setup",
-    //     "composition"
-    //   ]
-    // ],
-    // // "vue/no-empty-component-block": "error",
-    // // "vue/no-unused-properties": "error",
-    // "vue/no-unused-refs": "error",
-    // "vue/no-useless-mustaches": "error",
-    // "vue/no-useless-v-bind": "error",
-    // "vue/padding-line-between-blocks": "error",
-    // "vue/prefer-separate-static-class": "error",
-    // // Is it usefull??
-    // // "vue/static-class-names-order": "warn",
-    // // MROE INFO: https://mathiasbynens.github.io/rel-noopener/
-    // "vue/no-template-target-blank": [
-    //   "error",
-    //   {
-    //     "enforceDynamicLinks": "always"
-    //   }
-    // ],
-    // "no-multiple-empty-lines": [
-    //   "warn",
-    //   {
-    //     "max": 1,
-    //     "maxBOF": 0,
-    //     "maxEOF": 0
-    //   }
-    // ],
-    // "no-trailing-spaces": "error",
-    // "padding-line-between-statements": [
-    //   "error",
-    //   {
-    //     "blankLine": "always",
-    //     "prev": [
-    //       "const",
-    //       "let",
-    //       "var"
-    //     ],
-    //     "next": "*"
-    //   },
-    //   {
-    //     "blankLine": "any",
-    //     "prev": [
-    //       "const",
-    //       "let",
-    //       "var"
-    //     ],
-    //     "next": [
-    //       "const",
-    //       "let",
-    //       "var"
-    //     ]
-    //   },
-    //   {
-    //     "blankLine": "always",
-    //     "prev": "*",
-    //     "next": "return"
-    //   },
-    //   {
-    //     "blankLine": "always",
-    //     "prev": "*",
-    //     "next": [
-    //       "for",
-    //       "while",
-    //       "switch",
-    //       "if"
-    //     ]
-    //   },
-    //   {
-    //     "blankLine": "always",
-    //     "prev": [
-    //       "for",
-    //       "while",
-    //       "switch",
-    //       "if"
-    //     ],
-    //     "next": "*"
-    //   }
-    // ],
-    // "padded-blocks": [
-    //   "error",
-    //   "never"
-    // ],
-    // "no-await-in-loop": "error",
-    // "no-unmodified-loop-condition": "error",
-    // "indent": [
-    //   "warn",
-    //   2
-    // ],
-    // "space-before-function-paren": [
-    //   "warn",
-    //   "always"
-    // ],
-    // "keyword-spacing": [
-    //   "warn",
-    //   {
-    //     "before": true,
-    //     "after": true
-    //   }
-    // ],
-    // "space-infix-ops": "warn",
-    // "arrow-spacing": "warn",
-    // "array-bracket-spacing": [
-    //   "warn",
-    //   "always"
-    // ],
-    // "comma-spacing": [
-    //   "warn",
-    //   {
-    //     "before": false,
-    //     "after": true
-    //   }
-    // ],
-    // "no-multi-spaces": "warn",
-    // "object-curly-spacing": [
-    //   "warn",
-    //   "always"
-    // ],
-    // "semi-spacing": "warn", // no-need
-    // "space-before-blocks": "warn" // no-need
+    "vue/html-button-has-type": "warn",
+    "vue/component-api-style": [
+      "error",
+      [
+        "script-setup",
+        "composition"
+      ]
+    ],
+    "vue/no-unused-refs": "warn",
+    "vue/no-useless-mustaches": "error",
+    "vue/padding-line-between-blocks": "error",
+    "vue/prefer-separate-static-class": "error",
+    // MROE INFO: https://mathiasbynens.github.io/rel-noopener/
+    "vue/no-template-target-blank": [
+      "error",
+      {
+        "enforceDynamicLinks": "always"
+      }
+    ],
+    "no-multiple-empty-lines": "warn",
+    "no-await-in-loop": "error"
   }
 }
