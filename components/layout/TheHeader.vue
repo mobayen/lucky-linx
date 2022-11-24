@@ -17,7 +17,7 @@ const links = [
 
 <template>
   <div class="bg-gray-500/20 flex justify-center">
-    <div class="p-4 flex items-center justify-between w-full md:max-w-screen-md ">
+    <div class="p-4 flex items-center justify-between w-luckylinx">
       <!-- right -->
       <div class="flex">
         <div class="w-14 m-2">
