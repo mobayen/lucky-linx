@@ -24,7 +24,7 @@
     // "@typescript-eslint"
   ],
   "rules": {
-    // "vue/html-button-has-type": "warn",
+    "vue/html-button-has-type": "warn",
     // "vue/component-api-style": [
     //   "error",
     //   [
