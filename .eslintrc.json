@@ -1,47 +1,50 @@
 {
+  "root": true,
   "env": {
     "browser": true,
     "es2021": true,
     "node": true
   },
   "extends": [
-    "plugin:nuxt/recommended",
+    // "eslint:recommended",
     // "plugin:vue/vue3-recommended",
-    "eslint:recommended",
+    // "plugin:nuxt/recommended"
     // "@vue/eslint-config-typescript/recommended",
     "@nuxtjs/eslint-config-typescript"
     // "plugin:@typescript-eslint/recommended",
+    // "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "parser": "@typescript-eslint/parser",
+    // "parser": "@typescript-eslint/parser",
     "sourceType": "module"
   },
   "plugins": [
-    "nuxt",
-    "@typescript-eslint"
+    // "nuxt"
+    // "@typescript-eslint"
   ],
   "rules": {
-    "vue/html-button-has-type": "warn",
-    "vue/component-api-style": [
-      "error",
-      [
-        "script-setup",
-        "composition"
-      ]
-    ],
-    "vue/no-unused-refs": "warn",
-    "vue/no-useless-mustaches": "error",
-    "vue/padding-line-between-blocks": "error",
-    "vue/prefer-separate-static-class": "error",
-    // MROE INFO: https://mathiasbynens.github.io/rel-noopener/
-    "vue/no-template-target-blank": [
-      "error",
-      {
-        "enforceDynamicLinks": "always"
-      }
-    ],
-    "no-multiple-empty-lines": "warn",
-    "no-await-in-loop": "error"
+    // "vue/html-button-has-type": "warn",
+    // "vue/component-api-style": [
+    //   "error",
+    //   [
+    //     "script-setup",
+    //     "composition"
+    //   ]
+    // ],
+    // "vue/no-unused-refs": "warn",
+    // "vue/no-useless-mustaches": "error",
+    // "vue/padding-line-between-blocks": "error",
+    // "vue/prefer-separate-static-class": "error",
+    // // MROE INFO: https://mathiasbynens.github.io/rel-noopener/
+    // "vue/no-template-target-blank": [
+    //   "error",
+    //   {
+    //     "enforceDynamicLinks": "always"
+    //   }
+    // ],
+    // "no-multiple-empty-lines": "warn",
+    // "no-await-in-loop": "error",
+    "vue/multi-word-component-names": "off"
   }
 }
