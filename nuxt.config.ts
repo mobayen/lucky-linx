@@ -4,7 +4,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        // TODO: it's more customizavle to move the file to the /assets dir
+        // TODO: Use an uploaded file as favicon
+        // TODO... It needs to points to ~/assets/img/... or firebase-storage giles
+
         { rel: 'icon', type: 'image/png', href: '/ll-ico.png' }
       ]
     }
@@ -19,8 +21,7 @@ export default defineNuxtConfig({
   postcss: {
     plugins: {
       tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
-
+      autoprefixer: {}
+    }
+  }
 })
