@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-yellow-400/10 p-4 rounded border">
-    <h2 class="text-2xl">
+  <div class="p-4 rounded">
+    <h2 class="text-2xl text-center">
       Register
     </h2>
 
@@ -26,9 +26,13 @@
         class="my-2"
       />
 
-      <gButton value="this is a button" type="submit">
-        Submit
-      </gButton>
+      <div class="h-4" />
+
+      <div class="flex justify-center">
+        <gButton value="this is a button" type="submit">
+          Submit
+        </gButton>
+      </div>
     </form>
   </div>
 </template>

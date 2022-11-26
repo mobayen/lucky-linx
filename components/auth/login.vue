@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-blue-400/10 p-4 rounded border">
-    <h2 class="text-2xl">
-      login form
+  <div class="p-4 rounded">
+    <h2 class="text-2xl text-center">
+      Log in
     </h2>
 
     <form action="">
@@ -19,9 +19,13 @@
         class="my-2"
       />
 
-      <gButton value="this is a button" type="submit">
-        login
-      </gButton>
+      <div class="h-4" />
+
+      <div class="flex justify-center">
+        <gButton value="this is a button" type="submit">
+          Submit
+        </gButton>
+      </div>
     </form>
   </div>
 </template>
