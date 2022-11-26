@@ -9,8 +9,12 @@ const links = [
     target: '/about'
   },
   {
-    title: 'Auth',
-    target: '/auth'
+    title: 'login',
+    target: '/auth/login'
+  },
+  {
+    title: 'register',
+    target: '/auth/register'
   }
 ]
 </script>
