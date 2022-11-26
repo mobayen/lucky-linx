@@ -1,6 +1,8 @@
 <template>
   <button
-    class="bg-gray-500 text-white/90 font-semibold rounded px-4 py-2"
+    class="rounded border border-gray-500/30 hover:border-gray-500/20
+      text-gray-800/90 font-semibold
+      px-4 py-2"
     :type="type"
   >
     <slot />
