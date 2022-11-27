@@ -4,9 +4,9 @@
       Log in
     </h2>
 
-    <form action="">
+    <form @submit.prevent="submit">
       <gInput
-        v-model="name"
+        v-model="email"
         type="email"
         class="my-2 "
         label="email"
@@ -31,8 +31,14 @@
 </template>
 
 <script setup lang="ts">
+import { useAuth } from '~/stores/authStore'
 
-const name = ref('')
+const auth = useAuth()
+
+const email = ref('')
 const password = ref('')
 
+async function submit () {
+  await auth.signInUser(email.value, password.value)
+}
 </script>

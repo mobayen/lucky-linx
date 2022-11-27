@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useAuth } from '~/stores/authStore'
+
+const auth = useAuth()
+
 const links = [
   {
     title: 'Home',
@@ -7,20 +11,16 @@ const links = [
   {
     title: 'About',
     target: '/about'
-  },
-  {
-    title: 'login',
-    target: '/auth/login'
-  },
-  {
-    title: 'register',
-    target: '/auth/register'
   }
 ]
+
+async function signOut () {
+  await auth.signOut()
+}
 </script>
 
 <template>
-  <div class="bg-gray-500/20 flex justify-center">
+  <div class="bg-yellow-300/80 flex justify-center">
     <div class="p-4 flex items-center justify-between w-luckylinx">
       <!-- right -->
       <div class="flex">
@@ -39,11 +39,45 @@ const links = [
 
       <!-- left -->
       <div class="flex">
-        <div v-for="link in links" :key="link.title" class="text-rose-500 m-1 p-1">
-          <a :href="link.target">
+        <template
+          v-for="link in links"
+          :key="link.title"
+        >
+          <NuxtLink
+            :to="link.target"
+            class="text-rose-500 mx-2"
+          >
             {{ link.title }}
-          </a>
-        </div>
+          </NuxtLink>
+
+          <span class="text-rose-500/30">
+            /
+          </span>
+        </template>
+
+        <span class="text-rose-500/30">
+          /
+        </span>
+
+        <template v-if="auth.isLoggedIn">
+          <button type="button" class="text-sky-500 mx-2" @click="signOut">
+            Sign out
+          </button>
+        </template>
+
+        <template v-else>
+          <NuxtLink to="/auth/register" class="text-sky-500 ml-2 mr-1x">
+            Register
+          </NuxtLink>
+
+          <span class="text-sky-500/30 mx-1x">
+            /
+          </span>
+
+          <NuxtLink to="/auth/login" class="text-sky-500 ml-1x">
+            Log in
+          </NuxtLink>
+        </template>
       </div>
     </div>
   </div>

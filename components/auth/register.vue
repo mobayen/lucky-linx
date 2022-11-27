@@ -4,7 +4,7 @@
       Register
     </h2>
 
-    <form action="">
+    <form @submit.prevent="submit">
       <gInput
         v-model="name"
         type="text"
@@ -38,9 +38,16 @@
 </template>
 
 <script setup lang="ts">
+import { useAuth } from '~/stores/authStore'
 
+//
+const auth = useAuth()
 const name = ref('')
 const email = ref('')
 const password = ref('')
 
+// METHODS/FUNCTIONS //
+function submit () {
+  auth.createUser(email.value, password.value, name.value)
+}
 </script>
