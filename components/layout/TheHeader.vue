@@ -55,7 +55,7 @@ async function signOut () {
           </span>
         </template>
 
-        <span class="text-rose-500/30">
+        <span class="text-sky-500/30">
           /
         </span>
 

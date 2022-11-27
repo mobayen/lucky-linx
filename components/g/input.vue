@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label v-if="label" class="block">
+    <label v-if="label" class="block text-gray-500/70 ml-2">
       {{ label }}
     </label>
 
