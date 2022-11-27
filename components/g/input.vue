@@ -6,7 +6,9 @@
 
     <input
       :type="type"
-      class="border-b-2 mb-1 rounded block w-full focus:outline-none px-4 py-2 text-lg"
+      class="mb-1 px-4 py-2 w-full block
+        border rounded focus:border-gray-400/80
+        focus:outline-none text-lg bg-gray-200/50 focus:bg-gray-200/80 "
       @input="onInput"
     >
   </div>
