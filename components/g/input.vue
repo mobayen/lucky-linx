@@ -9,6 +9,7 @@
       class="mb-1 px-4 py-2 w-full block
         border rounded focus:border-gray-400/80
         focus:outline-none text-lg bg-gray-200/50 focus:bg-gray-200/80 "
+      :value="modelValue"
       @input="onInput"
     >
   </div>
