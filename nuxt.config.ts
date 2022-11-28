@@ -38,6 +38,13 @@ export default defineNuxtConfig({
         appId: process.env.FIREBASE_CONFIG_APP_ID,
         measurementId: process.env.FIREBASE_CONFIG_MEASUREMENT_ID
       }
+    },
+
+    /// PRIVATE ///
+    firebaseConfig: {
+      projectId: process.env.FIREBASE_CONFIG_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CONFIG_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_CONFIG_PRIVATE_KEY
     }
   }
 })

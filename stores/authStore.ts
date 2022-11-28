@@ -110,7 +110,6 @@ export const useAuth = defineStore('auth', {
      */
     async signInUser (email: string, password: string) {
       const auth = getAuth()
-      // let credential = undefined
 
       await signInWithEmailAndPassword(auth, email, password)
         .catch((error) => {
