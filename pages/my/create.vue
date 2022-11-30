@@ -30,16 +30,25 @@
       </div>
     </form>
 
+    <pre v-if="pending" class="bg-red-400"> pending... </pre>
+    <pre v-else class="bg-green-400">DONE!</pre>
+
     <!-- TODO: create an alert/error component -->
-    <div v-if="docId" class="bg-red-300">
-      doc id: {{ docId }}
+    <div class="bg-yellow-300">
+      doc id: {{ data }}
+    </div>
+    <div class="bg-purple-300">
+      error: {{ error }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-const docId = ref()
+// const docId = ref()
+const pending = ref(false)
+const data = ref()
+const error = ref()
 
 const title = ref('')
 const link = ref('')
@@ -47,16 +56,25 @@ const note = ref('')
 
 // METHODS/FUNCTIONS //
 async function submit () {
-  const { data, error } = await useFetch('/api/links/write', {
+  pending.value = true
+  error.value = null
+  data.value = null
+
+  await $fetch('/api/links/write', {
     method: 'POST',
     body: {
       title: title.value,
       link: link.value,
       note: note.value
     }
+  }).then((res) => {
+    data.value = res.uid
+  }).catch((err) => {
+    error.value = err
+  }).finally(() => {
+    pending.value = false
   })
-
-  docId.value = data.value?.uid
+  // await execute()
 
   if (error.value) {
     // TODO: display the error
@@ -66,6 +84,9 @@ async function submit () {
   }
 }
 
+/**
+ * resets the form
+ */
 function reset () {
   title.value = ''
   link.value = ''

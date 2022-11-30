@@ -10,7 +10,7 @@ const links = [
   },
   {
     title: 'About',
-    target: '/about'
+    target: '/'
   }
 ]
 
