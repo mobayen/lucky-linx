@@ -54,6 +54,11 @@ const title = ref('')
 const link = ref('')
 const note = ref('')
 
+//
+definePageMeta({
+  layout: 'my'
+})
+
 // METHODS/FUNCTIONS //
 async function submit () {
   pending.value = true

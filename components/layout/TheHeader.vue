@@ -60,21 +60,29 @@ async function signOut () {
         </span>
 
         <template v-if="auth.isLoggedIn">
-          <button type="button" class="text-sky-500 mx-2" @click="signOut">
+          <NuxtLink to="/my" class="text-sky-500">
+            Oh My
+          </NuxtLink>
+
+          <span class="text-sky-500/30">
+            /
+          </span>
+
+          <button type="button" class="text-sky-500" @click="signOut">
             Sign out
           </button>
         </template>
 
         <template v-else>
-          <NuxtLink to="/auth/register" class="text-sky-500 ml-2 mr-1x">
+          <NuxtLink to="/auth/register" class="text-sky-500">
             Register
           </NuxtLink>
 
-          <span class="text-sky-500/30 mx-1x">
+          <span class="text-sky-500/30">
             /
           </span>
 
-          <NuxtLink to="/auth/login" class="text-sky-500 ml-1x">
+          <NuxtLink to="/auth/login" class="text-sky-500">
             Log in
           </NuxtLink>
         </template>
