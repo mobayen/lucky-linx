@@ -13,10 +13,10 @@
       />
 
       <gInput
-        v-model="link"
+        v-model="url"
         type="text"
         class="my-2 "
-        label="link"
+        label="URL"
       />
 
       <gTextArea v-model="note" label="Note" class="my-4" />
@@ -44,6 +44,7 @@
 </template>
 
 <script setup lang="ts">
+import Link from '~~/models/Link'
 
 // const docId = ref()
 const pending = ref(false)
@@ -51,7 +52,7 @@ const data = ref()
 const error = ref()
 
 const title = ref('')
-const link = ref('')
+const url = ref('')
 const note = ref('')
 
 //
@@ -65,12 +66,12 @@ async function submit () {
   error.value = null
   data.value = null
 
+  const xlink = new Link({ title: title.value, url: url.value, note: note.value })
+
   await $fetch('/api/links/write', {
     method: 'POST',
     body: {
-      title: title.value,
-      link: link.value,
-      note: note.value
+      data: xlink.toJSON()
     }
   }).then((res) => {
     data.value = res.uid
@@ -94,7 +95,7 @@ async function submit () {
  */
 function reset () {
   title.value = ''
-  link.value = ''
+  url.value = ''
   note.value = ''
 }
 </script>

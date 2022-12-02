@@ -1,23 +1,21 @@
 import { db } from '~/server/lib/firebase'
+import Link from '~~/models/Link'
 
 export default defineEventHandler(async (event) => {
-  // console.log('x event', event)
-
   const body = await readBody(event)
+  const { data } = body
 
-  const title = body.title ?? ''
-  const link = body.link ?? ''
-  const note = body.note ?? ''
+  const xlink = new Link(data)
 
   // TODO: (temp) fake ERROR
-  if (link === 'error') {
+  if (xlink.url === 'error') {
     throw new Error('Not a real error')
   }
 
   let docId = null
 
   await db.collection('links')
-    .add({ title, link, note })
+    .add(xlink.toJSON())
     .then((docRef) => {
       docId = docRef.id
     })
