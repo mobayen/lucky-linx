@@ -1,9 +1,13 @@
 import { db } from '~/server/lib/firebase'
 import Link from '~~/models/Link'
+import { getAtBy } from '~~/server/lib/atByHelper'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { data } = body
+
+  // TODO: must return "unauthenticated-user" if the user does not exist
+  // TODO... or "aunauthorized-access" if the user does not have sufficient permission to write
 
   const xlink = new Link(data)
 
@@ -15,7 +19,10 @@ export default defineEventHandler(async (event) => {
   let docId = null
 
   await db.collection('links')
-    .add(xlink.toJSON())
+    .add({
+      ...xlink.toJSON(),
+      ...getAtBy(event)
+    })
     .then((docRef) => {
       docId = docRef.id
     })

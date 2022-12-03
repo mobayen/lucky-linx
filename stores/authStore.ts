@@ -53,7 +53,7 @@ export const useAuth = defineStore('auth', {
 
       const idTokenResult = await user.getIdTokenResult()
 
-      userCookie.value = JSON.stringify({ token: idTokenResult.token })
+      userCookie.value = JSON.stringify({ idToken: idTokenResult.token })
 
       this.user = {
         uid: user.uid,

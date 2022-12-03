@@ -66,7 +66,11 @@ async function submit () {
   error.value = null
   data.value = null
 
-  const xlink = new Link({ title: title.value, url: url.value, note: note.value })
+  const xlink = new Link({
+    title: title.value,
+    url: url.value,
+    note: note.value
+  })
 
   await $fetch('/api/links/write', {
     method: 'POST',
