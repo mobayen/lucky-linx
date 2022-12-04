@@ -6,8 +6,11 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { data } = body
 
-  // TODO: must return "unauthenticated-user" if the user does not exist
+  // TODO: VALIDATION needed
+  // TODO...
+  // TODO... must return "unauthenticated-user" if the user does not exist
   // TODO... or "aunauthorized-access" if the user does not have sufficient permission to write
+  // TODO... or "insufissent-data" if essential data was not present (like the URL is empty or not a URL)
 
   const xlink = new Link(data)
 
