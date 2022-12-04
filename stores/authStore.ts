@@ -5,22 +5,13 @@ import {
   User, updateProfile
 } from 'firebase/auth'
 import { defineStore } from 'pinia'
-
-interface myUser {
-  uid: string,
-  name: string | null,
-  email: string | null,
-  emailVerified: boolean,
-  phoneNumber: string | null,
-  photoURL: string | null,
-  // costum claims
-  role?: string | null
-}
+import UserModel from '~~/models/User'
+import IUser from '~~/types/IUser'
 
 export const useAuth = defineStore('auth', {
   state: () => {
     return {
-      user: null as myUser | null,
+      user: null as IUser | null,
       error: null as FirebaseError | null
     }
   },
@@ -51,20 +42,20 @@ export const useAuth = defineStore('auth', {
         return
       }
 
-      const idTokenResult = await user.getIdTokenResult()
+      const idTokenResult = await user.getIdTokenResult(true)
 
       userCookie.value = JSON.stringify({ idToken: idTokenResult.token })
 
-      this.user = {
+      this.user = new UserModel({
         uid: user.uid,
         name: user.displayName,
         email: user.email,
-        emailVerified: user.emailVerified,
-        phoneNumber: user.phoneNumber,
+        email_verified: user.emailVerified,
+        phone_number: user.phoneNumber,
         photoURL: user.photoURL,
         // costum claims
-        role: idTokenResult.claims.role ?? 'default'
-      }
+        role: idTokenResult.claims.role ?? ''
+      })
     },
 
     initUser () {
@@ -72,9 +63,6 @@ export const useAuth = defineStore('auth', {
 
       // extract props as needed
       this.extractUserDetail(auth.currentUser)
-
-      // TODO: cookie
-      // const userCookie = useCookie('__session')
 
       onAuthStateChanged(auth, (xuser) => {
         this.extractUserDetail(xuser)

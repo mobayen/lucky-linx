@@ -2,22 +2,25 @@ import { H3Event } from 'h3'
 import { FieldValue } from 'firebase-admin/firestore'
 
 /**
- * Gathers all information on who and when did what!
+ * Extracts all information on "who" and "when" did "what"!
  * To be included in every document in DB
+ *
+ * event.context.user is required
+ * It gets populated in the auth middleware
  *
  * @param event
  * @returns { createdAt, createdBy }
  */
 function getAtBy (event: H3Event) {
-  const { context } = event
-  const { user } = context
+  // NOTE: auth middleware populates the user
+  const user = event?.context?.user ?? undefined
 
   return {
     createdAt: FieldValue.serverTimestamp(),
     createdBy: {
       uid: user.uid,
       name: user.name,
-      picture: user.picture
+      photoURL: user.photoURL
     }
   }
 }
