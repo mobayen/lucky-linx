@@ -22,15 +22,25 @@ class Link implements ILink {
     this.note = link.note ?? null
   }
 
-  toJSON () {
-    return {
-      uid: this.uid,
+  /**
+   * @param withUID boolean: if the UID should included or not
+   * @returns ILink
+   */
+  toJSON (withUID?: false): ILink {
+    const obj:ILink = {
       metadata: this.metadata,
 
       url: this.url,
       title: this.title,
       note: this.note
     }
+
+    // not to include the UID if it's not needed or does not exist
+    if (this.uid && withUID) {
+      obj.uid = this.uid
+    }
+
+    return obj
   }
 
   // TODO: a validate() method
