@@ -23,18 +23,20 @@ async function signOut () {
   <div class="bg-yellow-300/80 flex justify-center">
     <div class="p-4 flex items-center justify-between w-luckylinx">
       <!-- right -->
-      <div class="flex">
-        <div class="w-14 m-2">
-          <img src="/ll-logo.png" alt="">
-        </div>
-        <div class="mx-2">
-          <div class="text-3xl text-gray-700/80 font-Merriweather">
-            LuckyLinx
+      <div>
+        <NuxtLink to="/" class="flex">
+          <div class="w-14 m-2">
+            <img src="/ll-logo.png" alt="">
           </div>
-          <div class="text-sm text-gray-800/50">
-            Let's get linked to the world
+          <div class="mx-2">
+            <div class="text-3xl text-gray-700/80 font-Merriweather">
+              LuckyLinx
+            </div>
+            <div class="text-sm text-gray-800/50">
+              Let's get linked to the world
+            </div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <!-- left -->
