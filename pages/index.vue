@@ -4,7 +4,11 @@ const data = ref()
 const errS = ref()
 const errC = ref()
 
-await $fetch('/api/links/all')
+await $fetch('/api/links/all', {
+  params: {
+    limit: 10
+  }
+})
   .then((res) => {
     data.value = res?.data
     errS.value = res?.error

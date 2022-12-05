@@ -2,11 +2,23 @@ import { db } from '~/server/lib/firebase'
 import Link from '~~/models/Link'
 import ILink from '~~/types/ILink'
 
-export default defineEventHandler(async (_event) => {
+// TODO: do we need tomove all control variables to a single file/dir??
+const MAX_DOC_COUNT = 12
+
+export default defineEventHandler(async (event) => {
+  const params = getQuery(event)
+  const { limit } = params
+
+  // make sure we dont pass only a Number
+  let limitQ = Math.floor(Number(limit))
+  if (isNaN(limitQ) || limitQ > MAX_DOC_COUNT) {
+    limitQ = MAX_DOC_COUNT
+  }
+
   const links: ILink[] = []
 
   await db.collection('links')
-    .limit(12)
+    .limit(limitQ)
     .orderBy('metadata.createdAt', 'desc')
     .get()
 
