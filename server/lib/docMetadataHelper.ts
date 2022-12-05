@@ -11,7 +11,7 @@ import { FieldValue } from 'firebase-admin/firestore'
  * @param event
  * @returns { createdAt, createdBy }
  */
-function getAtBy (event: H3Event) {
+function getDocMetadata (event: H3Event) {
   // NOTE: auth middleware populates the user
   const user = event?.context?.user ?? undefined
 
@@ -26,5 +26,5 @@ function getAtBy (event: H3Event) {
 }
 
 export {
-  getAtBy
+  getDocMetadata
 }
