@@ -1,3 +1,6 @@
+import isURL from 'validator/lib/isURL'
+import isLength from 'validator/lib/isLength'
+
 import ILink from '~~/types/ILink'
 import IDocMetadata from '~~/types/IDocMetaData'
 
@@ -46,6 +49,18 @@ class Link implements ILink {
   // TODO: a validate() method
   // TODO... checks if the url is a real url
   // TODO... checks it is ready to create or update??
+
+  validate () {
+    const url = isURL(this.url)
+    const title = isLength(this.title ?? '', { max: 128 })
+
+    return {
+      url,
+      title,
+
+      _all: url
+    }
+  }
 }
 
 export default Link

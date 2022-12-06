@@ -6,24 +6,27 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { data } = body
 
+  const linkObj = new Link(data)
+  let docId = null
+
   // TODO: VALIDATION needed
   // TODO...
   // TODO... must return "unauthenticated-user" if the user does not exist
   // TODO... or "aunauthorized-access" if the user does not have sufficient permission to write
   // TODO... or "insufissent-data" if essential data was not present (like the URL is empty or not a URL)
 
-  const xlink = new Link(data)
-
-  // TODO: (temp) fake ERROR
-  if (xlink.url === 'error') {
-    throw new Error('Not a real error')
+  // if the object does not validate
+  const v = linkObj.validate()
+  if (!v._all) {
+    throw createError({
+      statusCode: 406,
+      message: 'The Link object is not valid'
+    })
   }
-
-  let docId = null
 
   await db.collection('links')
     .add({
-      ...xlink.toJSON(),
+      ...linkObj.toJSON(),
       metadata: getDocMetadata(event)
     })
     .then((docRef) => {

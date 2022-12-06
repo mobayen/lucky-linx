@@ -6,20 +6,32 @@
 
     <form @submit.prevent="submit">
       <gInput
-        v-model="title"
+        v-model="linkObj.title"
         type="text"
         class="my-2 "
         label="title"
       />
 
+      <div>
+        <div v-if="!valid.title" class="bg-red-400 text-white/60 text-sm py-1 px-3 rounded">
+          Not a valid Title. It cannot be more than 128 characters
+        </div>
+      </div>
+
       <gInput
-        v-model="url"
+        v-model="linkObj.url"
         type="text"
-        class="my-2 "
+        class="my-2"
         label="URL"
       />
 
-      <gTextArea v-model="note" label="Note" class="my-4" />
+      <div>
+        <div v-if="!valid.url" class="bg-red-400 text-white/60 text-sm py-1 px-3 rounded">
+          Not a valid URL
+        </div>
+      </div>
+
+      <gTextArea v-model="linkObj.note" label="Note" class="my-4" />
 
       <div class="h-4" />
 
@@ -29,6 +41,11 @@
         </gButton>
       </div>
     </form>
+
+    <div class="bg-red-400">
+      validate;
+      <pre>{{ valid }}</pre>
+    </div>
 
     <pre v-if="pending" class="bg-red-400"> pending... </pre>
     <pre v-else class="bg-green-400">DONE!</pre>
@@ -46,36 +63,41 @@
 <script setup lang="ts">
 import Link from '~~/models/Link'
 
-// const docId = ref()
 const pending = ref(false)
 const data = ref()
 const error = ref()
 
-const title = ref('')
-const url = ref('')
-const note = ref('')
+const linkObj = reactive(new Link({
+  title: '',
+  url: '',
+  note: ''
+}))
 
 //
 definePageMeta({
   layout: 'my'
 })
 
-// METHODS/FUNCTIONS //
+/// COMPUTED PROPS ///
+const valid = computed(() => {
+  return linkObj.validate()
+})
+
+/// METHODS/FUNCTIONS ///
 async function submit () {
+  // cannot submit if the object is not validate
+  if (!valid.value._all) {
+    return
+  }
+
   pending.value = true
   error.value = null
   data.value = null
 
-  const xlink = new Link({
-    title: title.value,
-    url: url.value,
-    note: note.value
-  })
-
   await $fetch('/api/links/write', {
     method: 'POST',
     body: {
-      data: xlink.toJSON()
+      data: linkObj.toJSON()
     }
   }).then((res) => {
     data.value = res.uid
@@ -98,8 +120,8 @@ async function submit () {
  * resets the form
  */
 function reset () {
-  title.value = ''
-  url.value = ''
-  note.value = ''
+  linkObj.title = ''
+  linkObj.url = ''
+  linkObj.note = ''
 }
 </script>
