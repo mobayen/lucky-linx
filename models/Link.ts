@@ -6,20 +6,20 @@ import IDocMetadata from '~~/types/IDocMetaData'
 // TODO... empty URL or not a valid URL -> it cannot get stored yet
 
 class Link implements ILink {
-  public uid?: string | null = null
+  public uid?: string
   public metadata?: IDocMetadata
 
-  public title: string | null = null
+  public title: string
   public url = ''
-  public note?: string | null = null
+  public note?: string
 
   constructor (link: ILink) {
-    this.uid = link.uid ?? null
+    this.uid = link.uid
     this.metadata = link.metadata
 
-    this.title = link.title ?? null
+    this.title = link.title
     this.url = link.url
-    this.note = link.note ?? null
+    this.note = link.note
   }
 
   /**

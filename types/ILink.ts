@@ -1,12 +1,12 @@
 import IDocMetadata from '~~/types/IDocMetaData'
 
 interface ILink {
-  uid?: string | null
+  uid?: string
   metadata?: IDocMetadata
 
-  title: string | null
+  title: string
   url: string
-  note?: string | null
+  note?: string
 }
 
 export default ILink

@@ -19,7 +19,7 @@
 // PROPS //
 // TODO: other types will be added as I go
 interface props {
-  modelValue?: string,
+  modelValue?: string | number | string[] | undefined,
   label?: string
 }
 
