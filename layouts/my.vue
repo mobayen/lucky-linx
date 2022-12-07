@@ -1,5 +1,8 @@
 <script setup lang="ts">
 // Only authenticated users
+import { useAuth } from '~~/stores/authStore'
+
+const auth = useAuth()
 </script>
 
 <template>
@@ -7,10 +10,23 @@
     <layoutTheHeader class="my-4" />
 
     <div class="flex flex-col justify-center items-center grow">
-      <layoutMyNav />
+      <div v-if="auth.isLoggedIn">
+        <layoutMyNav />
 
-      <div class="m-4 p-4 w-luckylinx grow">
-        <slot />
+        <div class="m-4 p-4 w-luckylinx grow">
+          <slot />
+        </div>
+      </div>
+      <div>
+        YOU NEED TO
+        <NuxtLink class="text-sky-500 underline" t0="auth/login">
+          LOGG IN
+        </NuxtLink>
+        OR
+        <NuxtLink class="text-sky-500 underline" t0="auth/login">
+          REGISTER
+        </NuxtLink>
+        FIRST!
       </div>
     </div>
 
