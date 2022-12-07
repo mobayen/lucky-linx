@@ -28,17 +28,17 @@ const createdAt: ComputedRef<Date | null> = computed(() => {
 <template>
   <div>
     <a :href="link.url">
-      <h3 class="text-xl mb-2 text-center text-red-400">
+      <h3 class="text-xl mb-2 text-center text-rose-600">
         {{ link.title }}
 
       <!-- TODO: an icon to indicate it is a link and will open in a new tab -->
       </h3>
 
-      <div class="px-10 text-gray-900/80">
+      <div class="px-10 text-sm">
         {{ link.note }}
       </div>
 
-      <div class="text-sm mt-4 text-right">
+      <div class="text-sm mt-4 text-right text-gray-800/60">
         <div>
           {{ link.metadata?.createdBy.name }}
         </div>
