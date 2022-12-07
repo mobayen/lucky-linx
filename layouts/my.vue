@@ -17,7 +17,7 @@ const auth = useAuth()
           <slot />
         </div>
       </div>
-      <div>
+      <div v-else>
         YOU NEED TO
         <NuxtLink class="text-sky-500 underline" t0="auth/login">
           LOGG IN
