@@ -1,17 +1,33 @@
-<template>
-  <div>
-    <p>
-      the list of my links
-    </p>
-  </div>
-</template>
-
 <script setup lang="ts">
 definePageMeta({
   layout: 'my'
 })
+
+const data = ref()
+
+await $fetch('/api/links/user', {
+  params: {
+    limit: 10
+  }
+})
+  .then((res) => {
+    data.value = res?.data
+  })
+  .catch((err) => {
+    console.log('x err', err)
+  })
+
 </script>
 
-<style scoped>
+<template>
+  <div>
+    <LinkBox
+      v-for="item in data"
+      :key="item.uid"
+      :link="item"
+      class="my-2 p-6"
+    />
+  </div>
+</template>
 
-</style>
+<style scoped></style>
