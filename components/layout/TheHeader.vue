@@ -20,7 +20,7 @@ async function signOut () {
 </script>
 
 <template>
-  <div class="bg-yellow-300/80 flex justify-center">
+  <div class="bg-yellow-300 flex justify-center">
     <div class="p-4 flex items-center justify-between w-luckylinx">
       <!-- right -->
       <div>

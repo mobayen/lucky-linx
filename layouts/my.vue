@@ -3,16 +3,18 @@
 </script>
 
 <template>
-  <div class="">
+  <div class="flex flex-col min-h-screen">
     <layoutTheHeader class="my-4" />
 
-    <div class="flex flex-col justify-center items-center">
+    <div class="flex flex-col justify-center items-center grow">
       <layoutMyNav />
 
-      <div class="m-4 p-4 w-luckylinx">
+      <div class="m-4 p-4 w-luckylinx grow">
         <slot />
       </div>
     </div>
+
+    <layoutTheFooter />
   </div>
 </template>
 
