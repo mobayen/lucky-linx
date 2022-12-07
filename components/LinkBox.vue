@@ -26,16 +26,26 @@ const createdAt: ComputedRef<Date | null> = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="bg-yellow-400/10 ">
     <a :href="link.url">
-      <h3 class="text-xl mb-2 text-center text-rose-600">
-        {{ link.title }}
+      <div class="flex justify-center ">
+        <div class="px-2">
+          <gIcon class="text-rose-600/60 " icon="link" />
+        </div>
 
-      <!-- TODO: an icon to indicate it is a link and will open in a new tab -->
-      </h3>
+        <h3 class="text-xl mb-2 text-center text-rose-600 flex justify-center">
+          {{ link.title }}
+        </h3>
+      </div>
 
-      <div class="px-10 text-sm">
-        {{ link.note }}
+      <div v-if="link.note" class="px-10 text-sm flex">
+        <div class="pr-2">
+          <gIcon class="text-gray-600/50" />
+        </div>
+
+        <div>
+          {{ link.note }}
+        </div>
       </div>
 
       <div class="text-sm mt-4 text-right text-gray-800/60">

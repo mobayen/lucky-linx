@@ -22,15 +22,12 @@ await $fetch('/api/links/all', {
 
 <template>
   <div>
-    <div>
-      <div
-        v-for="item in data"
-        :key="item.uid"
-        class="bg-yellow-400/10 my-2 p-6"
-      >
-        <LinkBox :link="item" />
-      </div>
-    </div>
+    <LinkBox
+      v-for="item in data"
+      :key="item.uid"
+      :link="item"
+      class="my-2 p-6"
+    />
   </div>
 </template>
 
