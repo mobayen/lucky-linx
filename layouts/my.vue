@@ -1,5 +1,6 @@
 <script setup lang="ts">
-// Only authenticated users
+// TODO: Only authenticated users
+
 import { useAuth } from '~~/stores/authStore'
 
 const auth = useAuth()
@@ -10,13 +11,15 @@ const auth = useAuth()
     <layoutTheHeader class="my-4" />
 
     <div class="flex flex-col justify-center items-center grow">
-      <div v-if="auth.isLoggedIn">
-        <layoutMyNav />
+      <layoutMyNav v-if="auth.isLoggedIn" />
 
-        <div class="m-4 p-4 w-luckylinx grow">
-          <slot />
-        </div>
+      <div
+        v-if="auth.isLoggedIn"
+        class="m-4 p-4 w-luckylinx grow"
+      >
+        <slot />
       </div>
+
       <div v-else>
         YOU NEED TO
         <NuxtLink class="text-sky-500 underline" t0="auth/login">
