@@ -80,6 +80,8 @@ export const useAuth = defineStore('auth', {
     async createUser (email: string, password: string, name?: string) {
       const auth = getAuth()
 
+      // TODO: redirect if registered successfully
+
       await createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           this.updateProfile({
@@ -99,6 +101,8 @@ export const useAuth = defineStore('auth', {
     async signInUser (email: string, password: string) {
       const auth = getAuth()
 
+      // TODO: redirect if signed in successfully
+
       await signInWithEmailAndPassword(auth, email, password)
         .catch((error) => {
           this.error = error
@@ -111,6 +115,9 @@ export const useAuth = defineStore('auth', {
     async signOut () {
       const auth = getAuth()
       await auth.signOut()
+
+      // TODO: redirect to home page if the user was in a password-protected page
+      // TODO... if it;s already a public page dont need to redirect
     },
 
     updateProfile (options: {name?: string, photoURL?: string}) {
