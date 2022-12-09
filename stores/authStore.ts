@@ -62,7 +62,7 @@ export const useAuth = defineStore('auth', {
       const auth = getAuth()
 
       // extract props as needed
-      this.extractUserDetail(auth.currentUser)
+      // this.extractUserDetail(auth.currentUser)
 
       onAuthStateChanged(auth, (xuser) => {
         this.extractUserDetail(xuser)
@@ -120,20 +120,35 @@ export const useAuth = defineStore('auth', {
       // TODO... if it;s already a public page dont need to redirect
     },
 
-    updateProfile (options: {name?: string, photoURL?: string}) {
+    async updateProfile (options: {name?: string, photoURL?: string}): Promise<{ res: any}> {
       const auth = getAuth()
 
+      const response = {
+        res: ''
+      }
+
+      // TODO: create an IResponse type to be returned by some methods
+      // TODO... methods that request something from an external API
+
       if (!auth.currentUser) {
-        return
+        response.res = 'No user found'
+
+        return response
       }
 
       // TODO: do not pass a value if it does not exist in options
       // TODO... so it wont change if it already has a value
 
-      updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser, {
         displayName: options?.name ?? '',
         photoURL: options.photoURL ?? ''
+      }).then(() => {
+        response.res = 'Success'
+      }).catch((err) => {
+        response.res = 'ERROR: ' + err.message
       })
+
+      return response
     }
   }
 })
