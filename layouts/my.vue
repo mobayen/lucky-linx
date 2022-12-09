@@ -1,9 +1,12 @@
 <script setup lang="ts">
-// TODO: Only authenticated users
-
 import { useAuth } from '~~/stores/authStore'
 
+const route = useRoute()
 const auth = useAuth()
+
+const form = computed(() => {
+  return route.query?.f === 'register' ? 'register' : 'login'
+})
 </script>
 
 <template>
@@ -15,21 +18,32 @@ const auth = useAuth()
 
       <div
         v-if="auth.isLoggedIn"
-        class="m-4 p-4 w-luckylinx grow"
+        class="m-4 p-4 grow w-luckylinx"
       >
         <slot />
       </div>
 
-      <div v-else>
-        YOU NEED TO
-        <NuxtLink class="text-sky-500 underline" t0="auth/login">
-          LOGG IN
-        </NuxtLink>
-        OR
-        <NuxtLink class="text-sky-500 underline" t0="auth/login">
-          REGISTER
-        </NuxtLink>
-        FIRST!
+      <div v-else class="w-luckylinx">
+        <div v-if="form === 'login'">
+          <authLogin />
+        </div>
+
+        <div v-if="form === 'register'">
+          <authRegister />
+        </div>
+
+        <div class="h-2" />
+
+        <!-- TODO: create an error component -->
+        <div v-if="auth.hasError" class="bg-red-300/20 px-4 py-2 rounded w-full mt-10">
+          <div class="text-red-800 border-b border-gray-500/20 mb-2 ">
+            {{ auth.error?.code }}
+          </div>
+
+          <div class="text-red-400">
+            {{ auth.error?.message }}
+          </div>
+        </div>
       </div>
     </div>
 

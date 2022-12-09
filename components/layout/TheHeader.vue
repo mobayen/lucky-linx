@@ -76,7 +76,7 @@ async function signOut () {
         </template>
 
         <template v-else>
-          <NuxtLink to="/auth/register" class="text-sky-500">
+          <NuxtLink to="/my?f=register" class="text-sky-500">
             Register
           </NuxtLink>
 
@@ -84,7 +84,7 @@ async function signOut () {
             /
           </span>
 
-          <NuxtLink to="/auth/login" class="text-sky-500">
+          <NuxtLink to="/my?f=login" class="text-sky-500">
             Log in
           </NuxtLink>
         </template>
