@@ -21,7 +21,7 @@
 // TODO: other types will be added as I go
 interface props {
   modelValue?: string | null,
-  type: 'text' | 'password' | 'email',
+  type?: 'text' | 'password' | 'email',
   label?: string
 }
 
