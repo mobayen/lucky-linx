@@ -1,5 +1,9 @@
 /* extend base styles here */
 
+* {
+  @apply ease-in duration-200
+}
+
 body {
   @apply font-Poppins text-gray-800/80 bg-amber-200/10;
 }
