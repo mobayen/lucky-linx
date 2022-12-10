@@ -23,25 +23,25 @@ const createdAt: ComputedRef<Date | null> = computed(() => {
 
   return null
 })
+
 </script>
 
 <template>
-  <div class="bg-yellow-400/10 ">
+  <div
+    class="bg-gray-400/10 rounded border-2 border-gray-400/0
+  hover:border-gray-400/50 hover:bg-gray-400/20 hover:shadow-lg"
+  >
     <a :href="link.url">
-      <div class="flex justify-center ">
-        <div class="px-2">
-          <gIcon class="text-rose-600/60 " icon="link" />
-        </div>
+      <div class="flex">
+        <gIcon class="text-gray-600/60 pr-2" icon="link" />
 
-        <h3 class="text-xl mb-2 text-center text-rose-600 flex justify-center">
+        <h3 class="text-xl mb-2 text-gray-600  ">
           {{ link.title }}
         </h3>
       </div>
 
-      <div v-if="link.note" class="px-10 text-sm flex">
-        <div class="pr-2">
-          <gIcon class="text-gray-600/50" />
-        </div>
+      <div v-if="link.note" class="text-sm flex">
+        <gIcon class="text-gray-600/50 pr-2" />
 
         <div>
           {{ link.note }}
@@ -50,7 +50,14 @@ const createdAt: ComputedRef<Date | null> = computed(() => {
 
       <div class="text-sm mt-4 text-right text-gray-800/60">
         <div>
-          {{ link.metadata?.createdBy.name }}
+          by
+          <strong v-if="link.metadata?.createdBy.name">
+            {{ link.metadata?.createdBy.name }}
+          </strong>
+
+          <template v-else>
+            <span>&#x1F631;</span>
+          </template>
         </div>
         <div>
           {{ createdAt ?? 'N/A' }}
@@ -60,6 +67,4 @@ const createdAt: ComputedRef<Date | null> = computed(() => {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
