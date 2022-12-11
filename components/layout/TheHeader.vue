@@ -41,53 +41,47 @@ async function signOut () {
 
       <!-- left -->
       <div class="flex">
-        <template
-          v-for="link in links"
-          :key="link.title"
-        >
-          <NuxtLink
-            :to="link.target"
-            class="text-rose-500 mx-2"
-          >
-            {{ link.title }}
-          </NuxtLink>
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="text-rose-500">
+            <gIcon icon="more_vert" />
+          </label>
 
-          <span class="text-rose-500/30">
-            /
-          </span>
-        </template>
+          <div tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 text-left">
+            <template
+              v-for="link in links"
+              :key="link.title"
+            >
+              <NuxtLink
+                :to="link.target"
+                class="text-rose-500 m-1"
+              >
+                {{ link.title }}
+              </NuxtLink>
+            </template>
 
-        <span class="text-sky-500/30">
-          /
-        </span>
+            <div class="border border-b-sky-500/20" />
 
-        <template v-if="auth.isLoggedIn">
-          <NuxtLink to="/my" class="text-sky-500">
-            Oh My
-          </NuxtLink>
+            <template v-if="auth.isLoggedIn">
+              <NuxtLink to="/my" class="text-sky-500 m-1">
+                Oh My
+              </NuxtLink>
 
-          <span class="text-sky-500/30">
-            /
-          </span>
+              <button type="button" class="text-sky-500 m-1 text-left" @click="signOut">
+                Sign out
+              </button>
+            </template>
 
-          <button type="button" class="text-sky-500" @click="signOut">
-            Sign out
-          </button>
-        </template>
+            <template v-else>
+              <NuxtLink to="/my?f=register" class="text-sky-500 m-1">
+                Register
+              </NuxtLink>
 
-        <template v-else>
-          <NuxtLink to="/my?f=register" class="text-sky-500">
-            Register
-          </NuxtLink>
-
-          <span class="text-sky-500/30">
-            /
-          </span>
-
-          <NuxtLink to="/my?f=login" class="text-sky-500">
-            Log in
-          </NuxtLink>
-        </template>
+              <NuxtLink to="/my?f=login" class="text-sky-500 m-1">
+                Log in
+              </NuxtLink>
+            </template>
+          </div>
+        </div>
       </div>
     </div>
   </div>
