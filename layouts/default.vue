@@ -6,7 +6,7 @@
     <layoutTheHeader class="my-4" />
 
     <div class="flex justify-center grow">
-      <div class="m-4 p-4 w-luckylinx">
+      <div class="m-2 p-2 lg:m-4 lg:p-4 w-luckylinx">
         <slot />
       </div>
     </div>

@@ -14,6 +14,7 @@ const theLink = new Link(props.link)
 <template>
   <div
     class="bg-gray-400/10 rounded border-2 border-gray-400/0
+    p-2 pb-1 lg:p-6 lg:pb-2
   hover:border-gray-400/50 hover:bg-gray-400/20 hover:shadow-lg"
   >
     <div>

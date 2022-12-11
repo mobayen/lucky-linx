@@ -26,7 +26,7 @@ await $fetch('/api/links/all', {
       v-for="item in data"
       :key="item.uid"
       :link="item"
-      class="my-2 p-6"
+      class="my-2"
     />
   </div>
 </template>
