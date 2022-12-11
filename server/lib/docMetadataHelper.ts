@@ -1,5 +1,6 @@
 import { H3Event } from 'h3'
 import { FieldValue } from 'firebase-admin/firestore'
+import IDocMetaData from '~/types/IDocMetaData'
 
 /**
  * Extracts all information on "who" and "when" did "what"!
@@ -11,7 +12,7 @@ import { FieldValue } from 'firebase-admin/firestore'
  * @param event
  * @returns { createdAt, createdBy }
  */
-function getDocMetadata (event: H3Event) {
+function prepareDocMetadataBeforeWrite (event: H3Event) {
   // NOTE: auth middleware populates the user
   const user = event?.context?.user ?? undefined
 
@@ -25,6 +26,19 @@ function getDocMetadata (event: H3Event) {
   }
 }
 
+/**
+ * It massages and prepares the metadata object after the documents fetched
+ *
+ * @param metadata object
+ * @returns metadata object ready to be used
+ */
+function massageMetadataAfterFetch (metadata: IDocMetaData): IDocMetaData {
+  metadata.createdAtDate = metadata.createdAt?.toDate()
+
+  return metadata
+}
+
 export {
-  getDocMetadata
+  prepareDocMetadataBeforeWrite,
+  massageMetadataAfterFetch
 }

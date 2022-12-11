@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Timestamp } from '@firebase/firestore'
-import { ComputedRef } from 'vue'
+import Link from '~~/models/Link'
 import ILink from '~~/types/ILink'
 
 const props =
@@ -8,21 +7,7 @@ defineProps<{
   link: ILink
 }>()
 
-// TODO: This is a temporary computed prop
-// TODO... should be a Link or Metadata getter
-const createdAt: ComputedRef<Date | null> = computed(() => {
-  const date = props.link.metadata?.createdAt
-
-  // TODO: take care of the _seconds and _nanoseconds
-  // @ts-ignore
-  const temp = new Timestamp(date?._seconds, date?._nanoseconds)
-
-  if (temp?.seconds) {
-    return temp?.toDate()
-  }
-
-  return null
-})
+const theLink = new Link(props.link)
 
 </script>
 
@@ -31,39 +16,38 @@ const createdAt: ComputedRef<Date | null> = computed(() => {
     class="bg-gray-400/10 rounded border-2 border-gray-400/0
   hover:border-gray-400/50 hover:bg-gray-400/20 hover:shadow-lg"
   >
-    <a :href="link.url">
-      <div class="flex">
+    <div>
+      <a :href="theLink.url" class="flex">
         <gIcon class="text-gray-600/60 pr-2" icon="link" />
 
         <h3 class="text-xl mb-2 text-gray-600  ">
-          {{ link.title }}
+          {{ theLink.title }}
         </h3>
+      </a>
+    </div>
+
+    <div v-if="theLink.note" class="text-sm flex">
+      <gIcon class="text-gray-600/50 pr-2" />
+
+      <div>
+        {{ theLink.note }}
       </div>
+    </div>
 
-      <div v-if="link.note" class="text-sm flex">
-        <gIcon class="text-gray-600/50 pr-2" />
+    <div class="text-sm mt-4 text-right text-gray-800/60">
+      <template v-if="theLink.createdAtFormatted">
+        {{ theLink.createdAtFormatted?.value }}
+        <br>
+      </template>
 
-        <div>
-          {{ link.note }}
-        </div>
-      </div>
-
-      <div class="text-sm mt-4 text-right text-gray-800/60">
-        <div>
-          by
-          <strong v-if="link.metadata?.createdBy.name">
-            {{ link.metadata?.createdBy.name }}
-          </strong>
-
-          <template v-else>
-            <span>&#x1F631;</span>
-          </template>
-        </div>
-        <div>
-          {{ createdAt ?? 'N/A' }}
-        </div>
-      </div>
-    </a>
+      <template v-if="theLink.metadata?.createdBy.name">
+        by
+        <strong>{{ theLink.metadata?.createdBy.name }}</strong>
+      </template>
+      <strong v-else class="text-xs">
+        ¯\_(ツ)_/¯
+      </strong>
+    </div>
   </div>
 </template>
 

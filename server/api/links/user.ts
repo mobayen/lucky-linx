@@ -1,5 +1,6 @@
 import { db } from '~/server/lib/firebase'
 import Link from '~~/models/Link'
+import { massageMetadataAfterFetch } from '~~/server/lib/docMetadataHelper'
 import ILink from '~~/types/ILink'
 
 // TODO: do we need tomove all control variables to a single file/dir??
@@ -47,7 +48,7 @@ export default defineEventHandler(async (event) => {
           url: data.url,
           note: data.note,
 
-          metadata: data.metadata
+          metadata: massageMetadataAfterFetch(data.metadata)
         })
 
         links.push(newLink)

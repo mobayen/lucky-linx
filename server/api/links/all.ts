@@ -1,3 +1,4 @@
+import { massageMetadataAfterFetch } from '~~/server/lib/docMetadataHelper'
 import { db } from '~/server/lib/firebase'
 import Link from '~~/models/Link'
 import ILink from '~~/types/ILink'
@@ -21,7 +22,6 @@ export default defineEventHandler(async (event) => {
     .limit(limitQ)
     .orderBy('metadata.createdAt', 'desc')
     .get()
-
     .then((data) => {
       data.docs.forEach((doc) => {
         const data = doc.data()
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
           url: data.url,
           note: data.note,
 
-          metadata: data.metadata
+          metadata: massageMetadataAfterFetch(data.metadata)
         })
 
         links.push(newLink)

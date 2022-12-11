@@ -1,8 +1,9 @@
-// NOTE: dont import individually. This causes app crashes on Firebase/hosting
+// NOTE (important): dont import individually. This causes app crashes on Firebase/hosting
 // NOTE... (import isURL from 'validator/lib/isURL')
 // TODO: check if it chrashes on netlify
 import validator from 'validator'
 
+import { useTimeAgo } from '@vueuse/core'
 import ILink from '~~/types/ILink'
 import IDocMetadata from '~~/types/IDocMetaData'
 
@@ -53,6 +54,8 @@ class Link implements ILink {
   // TODO... checks it is ready to create or update??
 
   validate () {
+    // TODO: URL must have the protocl
+    // TODO... add http if there is no http or https
     const url = validator.isURL(this.url)
     const title = validator.isLength(this.title ?? '', { max: 128 })
 
@@ -62,6 +65,14 @@ class Link implements ILink {
 
       _all: url
     }
+  }
+
+  get createdAtFormatted () {
+    if (!this.metadata?.createdAtDate) {
+      return
+    }
+
+    return useTimeAgo(this.metadata.createdAtDate)
   }
 }
 

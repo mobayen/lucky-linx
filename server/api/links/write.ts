@@ -1,6 +1,6 @@
 import { db } from '~/server/lib/firebase'
 import Link from '~~/models/Link'
-import { getDocMetadata } from '~~/server/lib/docMetadataHelper'
+import { prepareDocMetadataBeforeWrite } from '~~/server/lib/docMetadataHelper'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
   await db.collection('links')
     .add({
       ...linkObj.toJSON(),
-      metadata: getDocMetadata(event)
+      metadata: prepareDocMetadataBeforeWrite(event)
     })
     .then((docRef) => {
       docId = docRef.id

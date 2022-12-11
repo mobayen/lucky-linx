@@ -1,8 +1,8 @@
-import { FieldValue } from 'firebase-admin/firestore'
+import { Timestamp } from 'firebase-admin/firestore'
 
-// TODO: FieldValue type does not work on the client side
 interface DocMetadata {
-  createdAt: FieldValue,
+  createdAt?: Timestamp,
+  createdAtDate?: Date,
   createdBy: {
     uid: string,
     name: string,
