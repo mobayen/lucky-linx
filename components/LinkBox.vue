@@ -27,7 +27,7 @@ const theLink = new Link(props.link)
       </a>
     </div>
 
-    <div v-if="theLink.note" class="text-sm flex">
+    <div v-if="theLink.note" class="text-sm flex items-start">
       <gIcon class="text-gray-600/50 pr-2" />
 
       <div class="whitespace-pre-line">
