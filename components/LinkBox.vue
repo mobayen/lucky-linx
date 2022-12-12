@@ -30,7 +30,7 @@ const theLink = new Link(props.link)
     <div v-if="theLink.note" class="text-sm flex">
       <gIcon class="text-gray-600/50 pr-2" />
 
-      <div>
+      <div class="whitespace-pre-line">
         {{ theLink.note }}
       </div>
     </div>
