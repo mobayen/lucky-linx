@@ -148,6 +148,10 @@ export const useAuth = defineStore('auth', {
         response.res = 'ERROR: ' + err.message
       })
 
+      // it refreshes the User session/cookie on every changes on the user info
+      // needed to have the updated user info on the server side
+      this.initUser()
+
       return response
     }
   }
