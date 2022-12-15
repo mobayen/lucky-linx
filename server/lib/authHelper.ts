@@ -41,7 +41,8 @@ async function getUser (event: H3Event) {
           phone_number: data.phone_number ?? null,
 
           // Custom claim props
-          role: data.role ?? null
+          role: data.role ?? null,
+          userName: data.userName ?? null
         })
       })
       .catch((error) => {

@@ -10,7 +10,7 @@ interface IUser {
   role: string | null
   // role?: string | null
 
-  // init: (j: string) => {}
+  userName: string | null
 }
 
 export default IUser

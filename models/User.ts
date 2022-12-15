@@ -13,6 +13,7 @@ class User implements IUser {
   // TODO... an array of roles
   // costume claims
   public role: string | null = ''
+  public userName: string | null = null
 
   constructor (user?: IUser) {
     // if user was undefined, keep the empty default values
@@ -28,6 +29,7 @@ class User implements IUser {
     this.phone_number = user.phone_number
     // custom claims
     this.role = user.role
+    this.userName = user.userName
   }
 
   toJSON (): IUser {
@@ -38,7 +40,8 @@ class User implements IUser {
       email: this.email,
       email_verified: this.email_verified,
       phone_number: this.phone_number,
-      role: this.role
+      role: this.role,
+      userName: this.userName
     }
   }
 }

@@ -38,6 +38,9 @@
       <label for="">photo</label>
       <gInput v-model="photo" />
 
+      <label for="">photousername</label>
+      <gInput v-model="userName" />
+
       <div v-if="pending" class="bg-red-500">
         pending...
       </div>
@@ -61,6 +64,7 @@ const pending = ref(false)
 
 // TODO: upload an image and pass the photo URL
 const photo = ref(auth.user?.photoURL)
+const userName = ref('')
 
 definePageMeta({
   layout: 'my'
@@ -71,12 +75,12 @@ async function submit () {
 
   await auth.updateProfile({
     name: name.value ?? '',
-    photoURL: photo.value ?? ''
+    photoURL: photo.value ?? '',
+    userName: userName.value
   }).finally(() => {
     pending.value = false
   })
 }
-
 </script>
 
 <style scoped></style>

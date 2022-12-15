@@ -54,7 +54,8 @@ export const useAuth = defineStore('auth', {
         phone_number: user.phoneNumber,
         photoURL: user.photoURL,
         // costum claims
-        role: idTokenResult.claims.role ?? ''
+        role: idTokenResult.claims.role ?? '',
+        userName: idTokenResult.claims.userName ?? ''
       })
     },
 
@@ -120,6 +121,7 @@ export const useAuth = defineStore('auth', {
     async updateProfile (options: {
       name?: string,
       photoURL?: string,
+      userName?: string,
     }): Promise<{ res: any }> {
       const auth = getAuth()
 
@@ -147,7 +149,8 @@ export const useAuth = defineStore('auth', {
         // if auth:updateProfile was successfull then we can create/update the profile doc in DB
         this.updateProfileDbDoc({
           photoURL: options.photoURL,
-          name: options.name
+          name: options.name,
+          userName: options.userName
         })
         response.res = 'Success'
       }).catch((err) => {
@@ -164,6 +167,7 @@ export const useAuth = defineStore('auth', {
     async updateProfileDbDoc (options: {
       name?: string,
       photoURL?: string,
+      userName?: string,
     }): Promise<void> {
       // TODO: probably it is better to update profiles collection in  a furebase/function
 
@@ -174,7 +178,8 @@ export const useAuth = defineStore('auth', {
         body: {
           data: {
             photoURL: options.photoURL,
-            name: options.name
+            name: options.name,
+            userName: options.userName
           }
         }
       }).then((d) => {
