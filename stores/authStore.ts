@@ -84,11 +84,8 @@ export const useAuth = defineStore('auth', {
 
       await createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          this.updateProfile({
-            name
-          })
-        })
-        .catch((error) => {
+          this.updateProfile({ name })
+        }).catch((error) => {
           this.error = error
         })
     },
@@ -120,7 +117,10 @@ export const useAuth = defineStore('auth', {
       // TODO... if it;s already a public page dont need to redirect
     },
 
-    async updateProfile (options: {name?: string, photoURL?: string}): Promise<{ res: any}> {
+    async updateProfile (options: {
+      name?: string,
+      photoURL?: string,
+    }): Promise<{ res: any }> {
       const auth = getAuth()
 
       const response = {
@@ -139,10 +139,16 @@ export const useAuth = defineStore('auth', {
       // TODO: do not pass a value if it does not exist in options
       // TODO... so it wont change if it already has a value
 
+      // it updates the auth:profile
       await updateProfile(auth.currentUser, {
         displayName: options?.name ?? '',
         photoURL: options.photoURL ?? ''
       }).then(() => {
+        // if auth:updateProfile was successfull then we can create/update the profile doc in DB
+        this.updateProfileDbDoc({
+          photoURL: options.photoURL,
+          name: options.name
+        })
         response.res = 'Success'
       }).catch((err) => {
         response.res = 'ERROR: ' + err.message
@@ -153,6 +159,29 @@ export const useAuth = defineStore('auth', {
       this.initUser()
 
       return response
+    },
+
+    async updateProfileDbDoc (options: {
+      name?: string,
+      photoURL?: string,
+    }): Promise<void> {
+      // TODO: probably it is better to update profiles collection in  a furebase/function
+
+      // TODO: move it to authStore
+
+      await $fetch('/api/users/write', {
+        method: 'POST',
+        body: {
+          data: {
+            photoURL: options.photoURL,
+            name: options.name
+          }
+        }
+      }).then((d) => {
+        console.log('x d', d)
+      }).catch((e) => {
+        console.log('x error, ', e)
+      })
     }
   }
 })

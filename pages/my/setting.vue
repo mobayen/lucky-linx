@@ -24,7 +24,7 @@
         {{ auth.user?.phone_number }}
       </div>
 
-      <pre class="bg-red-300 mt-4">{{ auth.user }}</pre>
+      <pre class="bg-red-300 mt-4 overflow-auto">{{ auth.user }}</pre>
     </div>
 
     <div class="mt-10 text-xl">
@@ -32,7 +32,10 @@
     </div>
 
     <form @submit.prevent="submit">
+      <label for="">Name</label>
       <gInput v-model="name" />
+
+      <label for="">photo</label>
       <gInput v-model="photo" />
 
       <div v-if="pending" class="bg-red-500">

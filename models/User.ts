@@ -25,8 +25,21 @@ class User implements IUser {
     this.photoURL = user.photoURL
     this.email = user.email
     this.email_verified = user.email_verified
-    this.role = user.role
     this.phone_number = user.phone_number
+    // custom claims
+    this.role = user.role
+  }
+
+  toJSON (): IUser {
+    return {
+      uid: this.uid,
+      name: this.name,
+      photoURL: this.photoURL,
+      email: this.email,
+      email_verified: this.email_verified,
+      phone_number: this.phone_number,
+      role: this.role
+    }
   }
 }
 
