@@ -6,6 +6,9 @@ import { db, auth } from '~~/server/lib/firebase'
 // TODO... ONLY a super admin can modify "claim.role" value
 // TODO... return a "not-enough-permission" if the user cannot set "role"
 
+// TODO: validate the User
+// TODO... before create or update
+
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { data } = body

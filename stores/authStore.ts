@@ -8,6 +8,9 @@ import { defineStore } from 'pinia'
 import UserModel from '~~/models/User'
 import IUser from '~~/types/IUser'
 
+// TODO: validate the User
+// TODO... before create or update
+
 export const useAuth = defineStore('auth', {
   state: () => {
     return {

@@ -40,6 +40,8 @@
 <script setup lang="ts">
 import { useAuth } from '~/stores/authStore'
 
+// TODO: user validation is needed
+
 //
 const auth = useAuth()
 const name = ref('')

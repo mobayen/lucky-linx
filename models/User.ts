@@ -1,3 +1,5 @@
+import validator from 'validator'
+
 import IUser from '~~/types/IUser'
 
 class User implements IUser {
@@ -42,6 +44,24 @@ class User implements IUser {
       phone_number: this.phone_number,
       role: this.role,
       userName: this.userName
+    }
+  }
+
+  validate () {
+    const name =
+      validator.isLength(this.name ?? '', { min: 1, max: 64 })
+
+    const userName =
+      validator.isLength(this.userName ?? '', { min: 5, max: 64 }) &&
+      validator.isAlphanumeric(this.userName ?? '', 'en-US', {
+        ignore: '_'
+      })
+
+    return {
+      name,
+      userName,
+
+      _all: name && userName
     }
   }
 }
