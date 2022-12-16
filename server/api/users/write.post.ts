@@ -1,15 +1,16 @@
 import UserModel from '~/models/User'
-import { db } from '~~/server/lib/firebase'
+import { db, auth } from '~~/server/lib/firebase'
+
+// TODO: roles are not need more security checks
+// TODO... a default super admin must be set as an env variable
+// TODO... ONLY a super admin can modify "claim.role" value
+// TODO... return a "not-enough-permission" if the user cannot set "role"
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { data } = body
 
-  console.log('x data', data)
-  // console.log('x body', body)
-
   const userx = event?.context?.user ?? undefined
-  console.log('user x', userx)
 
   const user = new UserModel({
     uid: userx.uid,
@@ -21,18 +22,14 @@ export default defineEventHandler(async (event) => {
     email: userx.email,
     email_verified: userx.email_verified,
     phone_number: userx.phone_number,
-    role: userx.role
-  })
-  console.log('user', user)
 
-  // TODO: add username to UserModel
+    role: ''
+  })
 
   // TODO: validate the User object
   // TODO... return error: not-valid if not valid
 
   // TODO: return error: not-authorized or not authenticated if no user or the user does nto have permission
-
-  // TODO: auth:user costume claims: "role" and "userName"
 
   await db.collection('profiles')
     .doc(user.uid)
@@ -43,17 +40,43 @@ export default defineEventHandler(async (event) => {
       email: user.email ?? null,
       email_verified: user.email_verified ?? null,
       phone_number: user.phone_number ?? null,
-      role: user.role ?? null,
-      userName: user.userName
+      userName: user.userName ?? null,
+      role: ''
+    }).catch((_err) => {
+      console.error('error(1)', _err)
 
-    }).then((_docRef) => {
-      // console.log('aa id', d)
-      // console.log('aa path', d.path)
-    }).catch((e) => {
-      console.log('aa error', e)
+      // TODO: throw or return the error
     })
+
+  // firebase/auth: set the custom claims for the user
+  set(user.uid, {
+    role: '', userName: user.userName ?? ''
+  })
 
   return {
     uid: 'docId'
   }
 })
+
+/**
+ * Set custom claims
+ *
+ * @param userId
+ * @param options
+ */
+async function set (
+  userId: string,
+  options?: {
+    role: string,
+    userName: string
+  }
+) {
+  await auth.setCustomUserClaims(userId, {
+    role: options?.role ?? '',
+    userName: options?.userName
+  }).then(() => {
+    // everything went fine
+  }).catch((_err) => {
+    // TODO: throw or return the error
+  })
+}

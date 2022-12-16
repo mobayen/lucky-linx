@@ -64,7 +64,7 @@ const pending = ref(false)
 
 // TODO: upload an image and pass the photo URL
 const photo = ref(auth.user?.photoURL)
-const userName = ref('')
+const userName = ref(auth.user?.userName)
 
 definePageMeta({
   layout: 'my'
@@ -76,7 +76,7 @@ async function submit () {
   await auth.updateProfile({
     name: name.value ?? '',
     photoURL: photo.value ?? '',
-    userName: userName.value
+    userName: userName.value ?? ''
   }).finally(() => {
     pending.value = false
   })
