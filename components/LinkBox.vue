@@ -41,9 +41,11 @@ const theLink = new Link(props.link)
         <br>
       </template>
 
-      <template v-if="theLink.metadata?.createdBy.name">
+      <template v-if="theLink.metadata?.createdBy.name && theLink.metadata?.createdBy.userName">
         by
-        <strong>{{ theLink.metadata?.createdBy.name }}</strong>
+        <NuxtLink :to="`/@${theLink.metadata?.createdBy.userName}`">
+          <strong>{{ theLink.metadata?.createdBy.name }}</strong>
+        </NuxtLink>
       </template>
       <strong v-else class="text-xs">
         ¯\_(ツ)_/¯

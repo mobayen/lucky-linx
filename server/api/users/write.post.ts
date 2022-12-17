@@ -9,6 +9,10 @@ import { db, auth } from '~~/server/lib/firebase'
 // TODO: validate the User
 // TODO... before create or update
 
+// TODO: https://github.com/mobayen/lucky-linx/issues/4
+// TODO... user.name and user.userName are not mandatory
+// TODO... but the user cannot create a linx if they are not valide
+
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { data } = body

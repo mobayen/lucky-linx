@@ -1,6 +1,7 @@
 import { H3Event } from 'h3'
 import { FieldValue } from 'firebase-admin/firestore'
 import IDocMetaData from '~/types/IDocMetaData'
+import User from '~~/models/User'
 
 /**
  * Extracts all information on "who" and "when" did "what"!
@@ -14,15 +15,12 @@ import IDocMetaData from '~/types/IDocMetaData'
  */
 function prepareDocMetadataBeforeWrite (event: H3Event) {
   // NOTE: auth middleware populates the user
-  const user = event?.context?.user ?? undefined
+  const userData = event?.context?.user ?? undefined
+  const user = new User(userData)
 
   return {
     createdAt: FieldValue.serverTimestamp(),
-    createdBy: {
-      uid: user.uid,
-      name: user.name,
-      photoURL: user.photoURL
-    }
+    createdBy: user.toJSON()
   }
 }
 
