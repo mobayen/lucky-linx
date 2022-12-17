@@ -56,7 +56,7 @@ class Link implements ILink {
   validate () {
     // TODO: URL must have the protocl
     // TODO... add http if there is no http or https
-    const url = validator.isURL(this.url)
+    const url = validator.isURL(this.url, { require_protocol: true })
     const title = validator.isLength(this.title ?? '', { max: 128 })
 
     return {
