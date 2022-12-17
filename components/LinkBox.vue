@@ -9,6 +9,9 @@ defineProps<{
 
 const theLink = new Link(props.link)
 
+const theURL = computed(() => {
+  return new URL(theLink.url)
+})
 </script>
 
 <template>
@@ -18,16 +21,27 @@ const theLink = new Link(props.link)
   hover:border-gray-400/50 hover:bg-gray-400/20 hover:shadow-lg"
   >
     <div>
-      <a :href="theLink.url" class="flex">
-        <gIcon class="text-gray-600/60 pr-2" icon="link" />
+      <a :href="theLink.url">
+        <div class="flex items-end">
 
-        <h3 class="text-xl mb-2 text-gray-600  ">
-          {{ theLink.title }}
-        </h3>
+          <gIcon class="text-gray-600/60 pr-2" icon="link" />
+
+          <h3 class="text-xl text-gray-600  ">
+            {{ theLink.title }}
+          </h3>
+        </div>
+
+        <div class="flex items-end">
+          <gIcon class="text-gray-600/60 pr-2" icon="home" />
+
+          <h4 class="text-gray-400">
+            {{ theURL.hostname }}
+          </h4>
+        </div>
       </a>
     </div>
 
-    <div v-if="theLink.note" class="text-sm flex items-start">
+    <div v-if="theLink.note" class="flex items-start mt-2">
       <gIcon class="text-gray-600/50 pr-2" />
 
       <div class="whitespace-pre-line">
