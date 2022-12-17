@@ -37,8 +37,8 @@ class Link implements ILink {
       metadata: this.metadata,
 
       url: this.url,
-      title: this.title,
-      note: this.note
+      title: this.title?.trim(),
+      note: this.note?.trim()
     }
 
     // not to include the UID if it's not needed or does not exist
