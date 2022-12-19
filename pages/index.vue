@@ -14,7 +14,7 @@ await $fetch('/api/links/all', {
     errS.value = res?.error
   })
   .catch((err) => {
-    console.log('x err', err)
+    console.log('x7 err', err)
     errC.value = err
   })
 

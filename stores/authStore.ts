@@ -186,9 +186,9 @@ export const useAuth = defineStore('auth', {
           }
         }
       }).then((d) => {
-        console.log('x d', d)
+        console.log('x8 d', d)
       }).catch((e) => {
-        console.log('x error, ', e)
+        console.log('x6 err, ', e)
       })
     }
   }

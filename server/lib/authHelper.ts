@@ -47,7 +47,7 @@ async function getUser (event: H3Event) {
       })
       .catch((error) => {
         // TODO: handle error??
-        console.error('x2 error', error)
+        console.error('x8 error', error)
 
         // clears the user
         user = new User()

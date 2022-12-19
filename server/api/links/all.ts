@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
       })
     })
     .catch((error) => {
-      console.log('ax error', error)
+      console.log('x3 err', error)
     })
 
   // throw createError({

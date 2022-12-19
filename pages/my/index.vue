@@ -9,13 +9,11 @@ await $fetch('/api/links/user', {
   params: {
     limit: 10
   }
+}).then((res) => {
+  data.value = res?.data
+}).catch((err) => {
+  console.log('x1 err', err)
 })
-  .then((res) => {
-    data.value = res?.data
-  })
-  .catch((err) => {
-    console.log('x err', err)
-  })
 
 </script>
 
