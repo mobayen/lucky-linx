@@ -10,7 +10,15 @@ defineProps<{
 const theLink = new Link(props.link)
 
 const theURL = computed(() => {
-  return new URL(theLink.url)
+  try {
+    return new URL(theLink.url)
+  } catch (error) {
+    console.log('x9 error', error)
+  }
+
+  return {
+    hostname: 'invalid URL'
+  }
 })
 </script>
 
