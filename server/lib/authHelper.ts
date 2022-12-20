@@ -44,8 +44,7 @@ async function getUser (event: H3Event) {
           role: data.role ?? null,
           userName: data.userName ?? null
         })
-      })
-      .catch((error) => {
+      }).catch((error) => {
         // TODO: handle error??
         console.error('x8 error', error)
 

@@ -53,10 +53,12 @@
       </gButton>
     </form>
 
-    <gPre title="auth:user > ">
+    <gPre class="my-1" title="auth:user > ">
       {{ auth.user }}
     </gPre>
-    <gPre>{{ valid }}</gPre>
+    <gPre class="my-1">
+      {{ valid }}
+    </gPre>
   </div>
 </template>
 

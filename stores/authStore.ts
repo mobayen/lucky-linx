@@ -57,6 +57,7 @@ export const useAuth = defineStore('auth', {
         phone_number: user.phoneNumber,
         photoURL: user.photoURL,
         // costum claims
+        // TODO: on update-profile custom claims props wont get updated
         role: idTokenResult.claims.role ?? '',
         userName: idTokenResult.claims.userName ?? ''
       })
@@ -125,20 +126,14 @@ export const useAuth = defineStore('auth', {
       name?: string,
       photoURL?: string,
       userName?: string,
-    }): Promise<{ res: any }> {
+    }): Promise<void> {
       const auth = getAuth()
-
-      const response = {
-        res: ''
-      }
 
       // TODO: create an IResponse type to be returned by some methods
       // TODO... methods that request something from an external API
 
       if (!auth.currentUser) {
-        response.res = 'No user found'
-
-        return response
+        return
       }
 
       // TODO: do not pass a value if it does not exist in options
@@ -155,16 +150,14 @@ export const useAuth = defineStore('auth', {
           name: options.name,
           userName: options.userName
         })
-        response.res = 'Success'
+
+        // force reload to refresh the user info
+        // TODO: any better solution to refresh user's info
+        // TODO... custom claims specificaly
+        // location.reload()
       }).catch((err) => {
-        response.res = 'ERROR: ' + err.message
+        console.log('x11 error: ', err)
       })
-
-      // it refreshes the User session/cookie on every changes on the user info
-      // needed to have the updated user info on the server side
-      this.initUser()
-
-      return response
     },
 
     async updateProfileDbDoc (options: {
@@ -185,8 +178,6 @@ export const useAuth = defineStore('auth', {
             userName: options.userName
           }
         }
-      }).then((d) => {
-        console.log('x8 d', d)
       }).catch((e) => {
         console.log('x6 err, ', e)
       })
