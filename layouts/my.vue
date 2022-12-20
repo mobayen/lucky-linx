@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useAuth } from '~~/stores/authStore'
 
-const route = useRoute()
+const router = useRouter()
 const auth = useAuth()
 
 const form = computed(() => {
-  return route.query?.f === 'register' ? 'register' : 'login'
+  // NOTE: for some reason route "useRoute()" does not work properly on the first load
+  return router.currentRoute.value.query?.f === 'register' ? 'register' : 'login'
 })
 </script>
 
