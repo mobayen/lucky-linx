@@ -63,13 +63,17 @@ const theURL = computed(() => {
         <br>
       </template>
 
-      <template v-if="theLink.metadata?.createdBy.name && theLink.metadata?.createdBy.userName">
+      <template v-if="theLink.metadata?.createdBy.userName">
         by
         <NuxtLink :to="`/@${theLink.metadata?.createdBy.userName}`">
           <strong>{{ theLink.metadata?.createdBy.name }}</strong>
         </NuxtLink>
       </template>
-      <strong v-else class="text-xs">
+      <span v-else-if="theLink.metadata?.createdBy.name">
+        by
+        {{ theLink.metadata?.createdBy.name }}
+      </span>
+      <strong v-else>
         ¯\_(ツ)_/¯
       </strong>
     </div>
