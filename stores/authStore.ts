@@ -154,7 +154,7 @@ export const useAuth = defineStore('auth', {
         // force reload to refresh the user info
         // TODO: any better solution to refresh user's info
         // TODO... custom claims specificaly
-        // location.reload()
+        location.reload()
       }).catch((err) => {
         console.log('x7 error: ', err)
       })
