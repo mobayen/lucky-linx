@@ -53,9 +53,8 @@ export default defineEventHandler(async (event) => {
 
         links.push(newLink)
       })
-    })
-    .catch((error) => {
-      console.log('ax error', error)
+    }).catch((error) => {
+      console.log('x6 error', error)
     })
 
   // throw createError({

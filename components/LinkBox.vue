@@ -13,7 +13,7 @@ const theURL = computed(() => {
   try {
     return new URL(theLink.url)
   } catch (error) {
-    console.log('x9 error', error)
+    console.log('x1 error', error)
   }
 
   return {

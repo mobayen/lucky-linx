@@ -156,7 +156,7 @@ export const useAuth = defineStore('auth', {
         // TODO... custom claims specificaly
         // location.reload()
       }).catch((err) => {
-        console.log('x11 error: ', err)
+        console.log('x7 error: ', err)
       })
     },
 
@@ -179,7 +179,7 @@ export const useAuth = defineStore('auth', {
           }
         }
       }).catch((e) => {
-        console.log('x6 err, ', e)
+        console.log('x8 err, ', e)
       })
     }
   }

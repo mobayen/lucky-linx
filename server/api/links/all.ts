@@ -37,9 +37,8 @@ export default defineEventHandler(async (event) => {
 
         links.push(newLink)
       })
-    })
-    .catch((error) => {
-      console.log('x3 err', error)
+    }).catch((error) => {
+      console.log('x5 err', error)
     })
 
   // throw createError({

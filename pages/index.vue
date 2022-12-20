@@ -8,15 +8,13 @@ await $fetch('/api/links/all', {
   params: {
     limit: 10
   }
+}).then((res) => {
+  data.value = res?.data
+  errS.value = res?.error
+}).catch((err) => {
+  console.log('x3 err', err)
+  errC.value = err
 })
-  .then((res) => {
-    data.value = res?.data
-    errS.value = res?.error
-  })
-  .catch((err) => {
-    console.log('x7 err', err)
-    errC.value = err
-  })
 
 </script>
 

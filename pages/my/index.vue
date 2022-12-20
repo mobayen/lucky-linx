@@ -12,7 +12,7 @@ await $fetch('/api/links/user', {
 }).then((res) => {
   data.value = res?.data
 }).catch((err) => {
-  console.log('x1 err', err)
+  console.log('x4 err', err)
 })
 
 </script>

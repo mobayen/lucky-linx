@@ -36,9 +36,6 @@ export default defineEventHandler(async (event) => {
     .then((docRef) => {
       docId = docRef.id
     })
-    // .catch((error) => {
-    //   console.log('x5 err', error.message)
-    // })
 
   // TODO: how to return with an http status/error
   // TODO... setResponseStatus(404, 'custom response')
