@@ -5,7 +5,7 @@ definePageMeta({
 
 const data = ref()
 
-await $fetch('/api/links/user', {
+await $fetch('/api/links/currentUser', {
   params: {
     limit: 10
   }

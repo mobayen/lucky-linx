@@ -8,7 +8,18 @@ const MAX_DOC_COUNT = 12
 
 export default defineEventHandler(async (event) => {
   const params = getQuery(event)
-  const { limit, userName } = params
+  const { limit } = params
+
+  // NOTE: auth middleware populates the user
+  const user = event?.context?.user ?? undefined
+
+  // ONLY logged-in users can get data
+  if (!user.uid) {
+    throw createError({
+      statusCode: 401,
+      message: 'You are not allowed to see this page'
+    })
+  }
 
   // TODO: check if a user is logged in
   // TODO... if not, return unauthorized-access
@@ -22,7 +33,7 @@ export default defineEventHandler(async (event) => {
   const links: ILink[] = []
 
   await db.collection('links')
-    .where('metadata.createdBy.userName', '==', userName)
+    .where('metadata.createdBy.uid', '==', user.uid)
     .limit(limitQ)
     .orderBy('metadata.createdAt', 'desc')
     .get()
@@ -51,6 +62,7 @@ export default defineEventHandler(async (event) => {
   // })
 
   return {
-    data: links
+    data: links,
+    error: 'no error yet'
   }
 })
