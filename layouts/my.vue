@@ -15,7 +15,7 @@ const form = computed(() => {
     <layoutTheHeader class="my-4" />
 
     <div class="flex flex-col justify-center items-center grow">
-      <layoutMyNav v-if="auth.isLoggedIn" />
+      <layoutMyNav />
 
       <div
         v-if="auth.isLoggedIn"
