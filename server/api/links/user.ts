@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
         links.push(newLink)
       })
     }).catch((error) => {
-      console.log('x6 error', error)
+      console.log('x10 error', error)
     })
 
   // throw createError({

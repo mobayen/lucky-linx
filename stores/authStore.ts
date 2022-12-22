@@ -179,7 +179,7 @@ export const useAuth = defineStore('auth', {
           }
         }
       }).catch((e) => {
-        console.log('x8 err, ', e)
+        console.log('x9 err, ', e)
       })
     }
   }
