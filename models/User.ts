@@ -1,4 +1,5 @@
-import validator from 'validator'
+import isLength from 'validator/es/lib/isLength'
+import isAlphanumeric from 'validator/es/lib/isAlphanumeric'
 
 import IUser from '~~/types/IUser'
 
@@ -49,11 +50,11 @@ class User implements IUser {
 
   validate () {
     const name =
-      validator.isLength(this.name ?? '', { min: 1, max: 64 })
+      isLength(this.name ?? '', { min: 1, max: 64 })
 
     const userName =
-      validator.isLength(this.userName ?? '', { min: 5, max: 64 }) &&
-      validator.isAlphanumeric(this.userName ?? '', 'en-US', {
+      isLength(this.userName ?? '', { min: 5, max: 64 }) &&
+      isAlphanumeric(this.userName ?? '', 'en-US', {
         ignore: '_'
       })
 
