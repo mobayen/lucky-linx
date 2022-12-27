@@ -9,16 +9,14 @@ defineProps<{
 
 const theLink = new Link(props.link)
 
-const theURL = computed(() => {
+const theURL = computed<URL | null>(() => {
   try {
     return new URL(theLink.url)
   } catch (error) {
     console.log('x1 error', error)
   }
 
-  return {
-    hostname: 'invalid URL'
-  }
+  return null
 })
 </script>
 
@@ -42,8 +40,16 @@ const theURL = computed(() => {
         <div class="flex items-end">
           <gIcon class="text-gray-600/60 pr-2" icon="home" />
 
-          <h4 class="text-gray-400">
-            {{ theURL.hostname }}
+          <h4 v-if="theURL" class="truncate text-gray-300 ">
+            <span class="text-gray-400 ">
+              {{ theURL.hostname }}
+            </span>
+            <span class="text-gray-300 text-sm">
+              {{ theURL.pathname }}
+            </span>
+            <span class="text-gray-300 text-sm">
+              {{ theURL.search }}
+            </span>
           </h4>
         </div>
       </a>
