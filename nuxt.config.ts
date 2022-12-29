@@ -45,6 +45,8 @@ export default defineNuxtConfig({
       projectId: process.env.FIREBASE_CONFIG_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CONFIG_CLIENT_EMAIL,
       privateKey: process.env.FIREBASE_CONFIG_PRIVATE_KEY
-    }
+    },
+
+    mongodbUrl: process.env.MONGODB_URL
   }
 })
