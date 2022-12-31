@@ -45,6 +45,7 @@
     // ],
     // "no-multiple-empty-lines": "warn",
     // "no-await-in-loop": "error",
-    "vue/multi-word-component-names": "off"
+    "vue/multi-word-component-names": "off",
+    "comma-dangle": ["error", "always-multiline"]
   }
 }
