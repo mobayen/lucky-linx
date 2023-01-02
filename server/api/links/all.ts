@@ -1,12 +1,17 @@
-import { massageMetadataAfterFetch } from '~~/server/lib/docMetadataHelper'
-import { db } from '~/server/lib/firebase'
-import Link from '~~/models/Link'
+// import { db } from '~/server/lib/firebase'
+// import Link from '~~/models/Link'
 import ILink from '~~/types/ILink'
+import LinkModel from '~~/server/api/LinkModel'
+import { connectMongoDB } from '~/server/lib/mongoDB'
+import Link from '~~/models/Link'
 
 // TODO: do we need tomove all control variables to a single file/dir??
 const MAX_DOC_COUNT = 12
 
 export default defineEventHandler(async (event) => {
+  // connect to MongoDB atlas
+  await connectMongoDB()
+
   const params = getQuery(event)
   const { limit } = params
 
@@ -16,30 +21,17 @@ export default defineEventHandler(async (event) => {
     limitQ = MAX_DOC_COUNT
   }
 
-  const links: ILink[] = []
-
-  await db.collection('links')
+  // Pulls from DB
+  const rawDocs = await LinkModel.find({})
+    .sort({ createdAt: -1 })
     .limit(limitQ)
-    .orderBy('metadata.createdAt', 'desc')
-    .get()
-    .then((data) => {
-      data.docs.forEach((doc) => {
-        const data = doc.data()
+    .exec()
 
-        const newLink = new Link({
-          uid: doc.id,
-          title: data.title,
-          url: data.url,
-          note: data.note,
-
-          metadata: massageMetadataAfterFetch(data.metadata)
-        })
-
-        links.push(newLink)
-      })
-    }).catch((error) => {
-      console.log('x5 err', error)
-    })
+  // Link model makes sure the JSON object is a real Link
+  const links: ILink[] = []
+  rawDocs.forEach((doc) => {
+    links.push(new Link(doc))
+  })
 
   // throw createError({
   //   statusCode: 401,
@@ -48,6 +40,5 @@ export default defineEventHandler(async (event) => {
 
   return {
     data: links,
-    error: 'no error yet'
   }
 })

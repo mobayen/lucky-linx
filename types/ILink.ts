@@ -1,12 +1,14 @@
-import IDocMetadata from '~~/types/IDocMetaData'
+import IUser from '~~/types/IUser'
 
 interface ILink {
-  uid?: string
-  metadata?: IDocMetadata
+  _id?: string
 
   title: string
   url: string
-  note?: string
+  note?: string,
+
+  createdBy?: IUser
+  createdAt?: Date
 }
 
 export default ILink

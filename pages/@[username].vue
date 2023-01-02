@@ -9,13 +9,9 @@
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit ratione atque enim excepturi autem consequuntur aspernatur sequi velit, adipisci rerum accusamus necessitatibus voluptatum qui perspiciatis dolor, a ex harum porro.
     </div>
 
-    <gPre class="mt-4">
-      {{ userName }}
-    </gPre>
-
     <LinkBox
       v-for="item in data"
-      :key="item.uid"
+      :key="item._id"
       :link="item"
       class="my-2"
     />
@@ -36,8 +32,8 @@ const data = ref()
 await $fetch('/api/links/user', {
   params: {
     limit: 10,
-    userName
-  }
+    userName,
+  },
 }).then((res) => {
   data.value = res?.data
 }).catch((err) => {

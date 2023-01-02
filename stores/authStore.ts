@@ -2,7 +2,7 @@ import { FirebaseError } from 'firebase/app'
 import {
   getAuth, onAuthStateChanged,
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  User, updateProfile
+  User, updateProfile,
 } from 'firebase/auth'
 import { defineStore } from 'pinia'
 import UserModel from '~~/models/User'
@@ -15,7 +15,7 @@ export const useAuth = defineStore('auth', {
   state: () => {
     return {
       user: null as IUser | null,
-      error: null as FirebaseError | null
+      error: null as FirebaseError | null,
     }
   },
 
@@ -26,7 +26,7 @@ export const useAuth = defineStore('auth', {
 
     hasError (): boolean {
       return !!this.error?.message
-    }
+    },
   },
 
   actions: {
@@ -59,7 +59,7 @@ export const useAuth = defineStore('auth', {
         // costum claims
         // TODO: on update-profile custom claims props wont get updated
         role: idTokenResult.claims.role ?? '',
-        userName: idTokenResult.claims.userName ?? ''
+        userName: idTokenResult.claims.userName ?? '',
       })
     },
 
@@ -142,18 +142,19 @@ export const useAuth = defineStore('auth', {
       // it updates the auth:profile
       await updateProfile(auth.currentUser, {
         displayName: options?.name ?? '',
-        photoURL: options.photoURL ?? ''
-      }).then(() => {
+        photoURL: options.photoURL ?? '',
+      }).then(async () => {
         // if auth:updateProfile was successfull then we can create/update the profile doc in DB
-        this.updateProfileDbDoc({
+        await this.updateProfileDbDoc({
           photoURL: options.photoURL,
           name: options.name,
-          userName: options.userName
+          userName: options.userName,
         })
 
         // force reload to refresh the user info
         // TODO: any better solution to refresh user's info
         // TODO... custom claims specificaly
+
         location.reload()
       }).catch((err) => {
         console.log('x7 error: ', err)
@@ -175,12 +176,12 @@ export const useAuth = defineStore('auth', {
           data: {
             photoURL: options.photoURL,
             name: options.name,
-            userName: options.userName
-          }
-        }
+            userName: options.userName,
+          },
+        },
       }).catch((e) => {
         console.log('x9 err, ', e)
       })
-    }
-  }
+    },
+  },
 })
