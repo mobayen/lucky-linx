@@ -1,21 +1,17 @@
+import { db } from '~/server/lib/firebase'
 import Link from '~~/models/Link'
-import { currentUser } from '~~/server/lib/docMetadataHelper'
-// MongoDB
-import { connectMongoDB } from '~/server/lib/mongoDB'
-import LinkModel from '~~/server/api/LinkModel'
+import { prepareDocMetadataBeforeWrite } from '~~/server/lib/docMetadataHelper'
 
 // TODO: https://github.com/mobayen/lucky-linx/issues/4
 // TODO... user.name and user.userName are not mandatory
 // TODO... but the user cannot create a linx if they are not valide
 
 export default defineEventHandler(async (event) => {
-  // connect to MongoDB atlas
-  await connectMongoDB()
-
   const body = await readBody(event)
   const { data } = body
 
   const linkObj = new Link(data)
+  let docId = null
 
   // TODO: VALIDATION needed
   // TODO...
@@ -28,18 +24,22 @@ export default defineEventHandler(async (event) => {
   if (!v._all) {
     throw createError({
       statusCode: 406,
-      message: 'The Link object is not valid',
+      message: 'The Link object is not valid'
     })
   }
 
-  const rawDoc = await LinkModel.create({
-    ...linkObj.toJSON(),
-    createdBy: currentUser(event),
-  })
+  await db.collection('links')
+    .add({
+      ...linkObj.toJSON(),
+      metadata: prepareDocMetadataBeforeWrite(event)
+    })
+    .then((docRef) => {
+      docId = docRef.id
+    })
 
   // TODO: how to return with an http status/error
   // TODO... setResponseStatus(404, 'custom response')
   return {
-    uid: rawDoc._id ?? 'error',
+    uid: docId
   }
 })

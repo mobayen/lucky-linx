@@ -1,15 +1,12 @@
-import LinkModel from '../LinkModel'
+import { db } from '~/server/lib/firebase'
 import Link from '~~/models/Link'
+import { massageMetadataAfterFetch } from '~~/server/lib/docMetadataHelper'
 import ILink from '~~/types/ILink'
-import { connectMongoDB } from '~/server/lib/mongoDB'
 
 // TODO: do we need tomove all control variables to a single file/dir??
 const MAX_DOC_COUNT = 12
 
 export default defineEventHandler(async (event) => {
-  // connect to MongoDB atlas
-  await connectMongoDB()
-
   const params = getQuery(event)
   const { limit } = params
 
@@ -20,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!user.uid) {
     throw createError({
       statusCode: 401,
-      message: 'You are not allowed to see this page',
+      message: 'You are not allowed to see this page'
     })
   }
 
@@ -33,17 +30,31 @@ export default defineEventHandler(async (event) => {
     limitQ = MAX_DOC_COUNT
   }
 
-  const rawDocs = await LinkModel.find({
-    'createdBy.uid': user.uid,
-  }).sort({ createdAt: -1 })
-    .limit(limitQ)
-    .exec()
-
-  // Link model makes sure the JSON object is a real Link
   const links: ILink[] = []
-  rawDocs.forEach((doc) => {
-    links.push(new Link(doc))
-  })
+
+  await db.collection('links')
+    .where('metadata.createdBy.uid', '==', user.uid)
+    .limit(limitQ)
+    .orderBy('metadata.createdAt', 'desc')
+    .get()
+    .then((data) => {
+      data.docs.forEach((doc) => {
+        const data = doc.data()
+
+        const newLink = new Link({
+          uid: doc.id,
+          title: data.title,
+          url: data.url,
+          note: data.note,
+
+          metadata: massageMetadataAfterFetch(data.metadata)
+        })
+
+        links.push(newLink)
+      })
+    }).catch((error) => {
+      console.log('x6 error', error)
+    })
 
   // throw createError({
   //   statusCode: 401,
@@ -52,6 +63,6 @@ export default defineEventHandler(async (event) => {
 
   return {
     data: links,
-    error: 'no error yet',
+    error: 'no error yet'
   }
 })

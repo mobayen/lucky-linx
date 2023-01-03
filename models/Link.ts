@@ -3,40 +3,45 @@ import isLength from 'validator/es/lib/isLength'
 
 import { useTimeAgo } from '@vueuse/core'
 import ILink from '~~/types/ILink'
-import IUser from '~~/types/IUser'
+import IDocMetadata from '~~/types/IDocMetaData'
+
+// TODO: "uid" exists -> it is not a new doc. should not create, just can get updated
+// TODO... no "uid" -> it has not stored in DB
+// TODO... empty URL or not a valid URL -> it cannot get stored yet
 
 class Link implements ILink {
-  public _id?: string
+  public uid?: string
+  public metadata?: IDocMetadata
 
   public title: string
   public url = ''
   public note?: string
 
-  public createdBy?: IUser
-  public createdAt?: Date // TODO: check if it's realy a Date or string
-
   constructor (link: ILink) {
-    this._id = link._id
+    this.uid = link.uid
+    this.metadata = link.metadata
 
     this.title = link.title
     this.url = link.url
     this.note = link.note
-    this.createdBy = link.createdBy ?? undefined
-    this.createdAt = link.createdAt ?? undefined
   }
 
   /**
+   * @param withUID boolean: if the UID should included or not
    * @returns ILink
    */
-  toJSON (): ILink {
+  toJSON (withUID?: false): ILink {
     const obj:ILink = {
-      _id: this._id,
+      metadata: this.metadata,
+
       url: this.url,
       title: this.title?.trim(),
-      note: this.note?.trim(),
+      note: this.note?.trim()
+    }
 
-      createdBy: this.createdBy,
-      createdAt: this.createdAt,
+    // not to include the UID if it's not needed or does not exist
+    if (this.uid && withUID) {
+      obj.uid = this.uid
     }
 
     return obj
@@ -56,16 +61,16 @@ class Link implements ILink {
       url,
       title,
 
-      _all: url,
+      _all: url
     }
   }
 
   get createdAtFormatted () {
-    if (!this.createdAt) {
+    if (!this.metadata?.createdAtDate) {
       return
     }
 
-    return useTimeAgo(this.createdAt)
+    return useTimeAgo(this.metadata.createdAtDate)
   }
 }
 
