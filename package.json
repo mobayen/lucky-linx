@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "NITRO_PRESET=firebase nuxt build && cd .output/server && rm -rf node_modules && yarn install",
     "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore",
     "deploy": "firebase deploy",
     "bnd": "yarn build && yarn deploy",
