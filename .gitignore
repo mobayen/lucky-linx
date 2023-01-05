@@ -10,3 +10,5 @@ dist
 .DS_Store
 
 .firebase
+
+extensions/firestore-algolia-search.env
