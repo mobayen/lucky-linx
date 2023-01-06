@@ -20,6 +20,36 @@ export default defineEventHandler(async (event) => {
   }
 
   const links: ILink[] = []
+  // let briefUser: IUser = new User()
+  let briefUser = null
+
+  // first find the user
+  await db.collection('profiles')
+    .where('userName', '==', userName)
+    .limit(1)
+    .get()
+    .then((docs) => {
+      // TODO: throw an error if no user found
+      // if (docs.empty) {
+      // }
+
+      docs.forEach((doc) => {
+        const temp = doc.data()
+        // Be careful not to share sensitive information
+        // It willbe visible on a public page
+        briefUser = {
+          name: temp.name,
+          userName: temp.userName,
+          photoURL: temp.photoURL,
+          about: temp.about,
+        }
+      })
+    }).catch((err) => {
+      console.log('x12 error', err)
+    })
+
+  // TODO: if the user has not found, throw a "user does not exist" error
+  // TODO...
 
   await db.collection('links')
     .where('metadata.createdBy.userName', '==', userName)
@@ -51,6 +81,9 @@ export default defineEventHandler(async (event) => {
   // })
 
   return {
-    data: links,
+    data: {
+      links,
+      user: briefUser,
+    },
   }
 })

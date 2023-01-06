@@ -4,17 +4,14 @@
       @{{ userName }}
     </h2>
 
-    <div>
-      About the user (coming soon!)
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit ratione atque enim excepturi autem consequuntur aspernatur sequi velit, adipisci rerum accusamus necessitatibus voluptatum qui perspiciatis dolor, a ex harum porro.
+    <div v-if="userBrief?.about" class="flex justify-center mb-8">
+      <div class="w-2/3 text-gray-600/80 text-sm">
+        {{ userBrief.about }}
+      </div>
     </div>
 
-    <gPre class="mt-4">
-      {{ userName }}
-    </gPre>
-
     <LinkBox
-      v-for="item in data"
+      v-for="item in links"
       :key="item.uid"
       :link="item"
       class="my-2"
@@ -23,25 +20,45 @@
 </template>
 
 <script setup lang="ts">
+import Link from '~~/models/Link'
+import ILink from '~~/types/ILink'
+
 const route = useRoute()
 
 // TODO: safty check: if the user is not alphaNumberic or less than 5 characters:
 // TODO... A) dont request to get data
 // TODO... B) display a warning
 
+// TODO: if the returned user was empty/null
+// TODO... display a warning "wrong userName"
+
 const userName = route.params.username
 
-const data = ref()
+const tempLinks = ref()
+const userBrief = ref()
 
 await $fetch('/api/links/user', {
   params: {
     limit: 10,
-    userName
-  }
+    userName,
+  },
 }).then((res) => {
-  data.value = res?.data
+  const { links, user } = res?.data
+  tempLinks.value = links
+  userBrief.value = user
 }).catch((err) => {
   console.log('x2 err', err)
+})
+
+/// COMPUTED ///
+const links = computed(() => {
+  const temp: ILink[] = []
+
+  tempLinks.value.forEach((l: ILink) => {
+    temp.push(new Link(l))
+  })
+
+  return temp
 })
 
 </script>
