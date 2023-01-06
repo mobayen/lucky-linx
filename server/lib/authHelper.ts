@@ -42,7 +42,8 @@ async function getUser (event: H3Event) {
 
           // Custom claim props
           role: data.role ?? null,
-          userName: data.userName ?? null
+          userName: data.userName ?? null,
+          about: data.about ?? null,
         })
       }).catch((error) => {
         // TODO: handle error??
@@ -57,5 +58,5 @@ async function getUser (event: H3Event) {
 }
 
 export {
-  getUser
+  getUser,
 }

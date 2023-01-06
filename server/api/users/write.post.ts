@@ -25,12 +25,13 @@ export default defineEventHandler(async (event) => {
     photoURL: data.photoURL,
     name: data.name,
     userName: data.userName,
+    about: data.about,
 
     email: userx.email,
     email_verified: userx.email_verified,
     phone_number: userx.phone_number,
 
-    role: ''
+    role: '',
   })
 
   // TODO: validate the User object
@@ -48,25 +49,29 @@ export default defineEventHandler(async (event) => {
       email_verified: user.email_verified ?? null,
       phone_number: user.phone_number ?? null,
       userName: user.userName ?? null,
-      role: ''
+      role: '',
+      about: user.about ?? null,
     }).catch((_err) => {
-      console.error('error(1)', _err)
+      console.error('x error(1)', _err)
 
       // TODO: throw or return the error
     })
 
   // firebase/auth: set the custom claims for the user
   set(user.uid, {
-    role: '', userName: user.userName ?? ''
+    role: '',
+    userName: user.userName ?? '',
   })
 
   return {
-    uid: 'docId'
+    uid: 'docId',
   }
 })
 
 /**
  * Set custom claims
+ *
+ * NOTE: custom-claims has a 1000 bytes limitation in size
  *
  * @param userId
  * @param options
@@ -75,12 +80,12 @@ async function set (
   userId: string,
   options?: {
     role: string,
-    userName: string
-  }
+    userName: string,
+  },
 ) {
   await auth.setCustomUserClaims(userId, {
     role: options?.role ?? '',
-    userName: options?.userName
+    userName: options?.userName,
   }).then(() => {
     // everything went fine
   }).catch((_err) => {

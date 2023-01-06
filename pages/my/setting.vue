@@ -1,7 +1,15 @@
 <template>
   <div>
     <div class="text-center text-xl">
-      Hi "{{ auth.user?.name }}"!
+      <template v-if="auth.user?.name">
+        Hi "{{ auth.user?.name }}"!
+      </template>
+      <template v-else-if="auth.user?.userName">
+        Hi "{{ auth.user?.userName }}"!
+      </template>
+      <template v-else>
+        Hi!
+      </template>
     </div>
 
     <div>
@@ -45,6 +53,9 @@
         Not a valid userName
       </div>
 
+      <label for="">about</label>
+      <gInput v-model="userObj.about" />
+
       <div v-if="pending" class="bg-red-500">
         pending...
       </div>
@@ -83,11 +94,13 @@ const userObj = reactive(new UserModel({
   email_verified: auth.user?.email_verified ?? false,
   phone_number: auth.user?.phone_number ?? '',
   role: auth.user?.role ?? '',
-  userName: auth.user?.userName ?? ''
+  userName: auth.user?.userName ?? '',
+  about: auth.user?.about ?? '',
 }))
 
+/// META ///
 definePageMeta({
-  layout: 'my'
+  layout: 'my',
 })
 
 const valid = computed(() => {
@@ -99,7 +112,8 @@ async function submit () {
   await auth.updateProfile({
     name: userObj.name ?? '',
     photoURL: userObj.photoURL ?? '',
-    userName: userObj.userName ?? ''
+    userName: userObj.userName ?? '',
+    about: userObj.about ?? '',
   }).finally(() => {
     pending.value = false
   })

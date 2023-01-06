@@ -2,7 +2,7 @@ import { FirebaseError } from 'firebase/app'
 import {
   getAuth, onAuthStateChanged,
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  User, updateProfile
+  User, updateProfile,
 } from 'firebase/auth'
 import { defineStore } from 'pinia'
 import UserModel from '~~/models/User'
@@ -15,7 +15,7 @@ export const useAuth = defineStore('auth', {
   state: () => {
     return {
       user: null as IUser | null,
-      error: null as FirebaseError | null
+      error: null as Error | FirebaseError | null,
     }
   },
 
@@ -26,7 +26,7 @@ export const useAuth = defineStore('auth', {
 
     hasError (): boolean {
       return !!this.error?.message
-    }
+    },
   },
 
   actions: {
@@ -49,18 +49,35 @@ export const useAuth = defineStore('auth', {
 
       userCookie.value = JSON.stringify({ idToken: idTokenResult.token })
 
-      this.user = new UserModel({
-        uid: user.uid,
-        name: user.displayName,
-        email: user.email,
-        email_verified: user.emailVerified,
-        phone_number: user.phoneNumber,
-        photoURL: user.photoURL,
-        // costum claims
-        // TODO: on update-profile custom claims props wont get updated
-        role: idTokenResult.claims.role ?? '',
-        userName: idTokenResult.claims.userName ?? ''
+      // Pull the user info from DB
+      await $fetch('/api/users/find', {
+        params: {
+          uid: user?.uid,
+        },
+      }).then((res) => {
+        if (res.data.user) {
+          const theUser: IUser = res.data.user
+          this.user = new UserModel(theUser)
+        }
+      }).catch((err) => {
+        console.log('x9 err', err)
       })
+
+      // make sure user info from DB matches the Auth
+      if (
+        user.uid !== this.user?.uid ||
+        (user.displayName ?? '') !== this.user?.name ||
+        (user.email ?? '') !== this.user?.email ||
+        user.emailVerified !== this.user?.email_verified ||
+        (user.phoneNumber ?? '') !== this.user.phone_number ||
+        (user.photoURL ?? '') !== this.user?.photoURL ||
+        (idTokenResult.claims.role ?? '') !== this.user.role ||
+        (idTokenResult.claims.userName ?? '') !== this.user.userName
+      ) {
+        // TODO: display what do not match??
+
+        this.error = new Error('ERROR: user\'s info do not match')
+      }
     },
 
     initUser () {
@@ -126,6 +143,7 @@ export const useAuth = defineStore('auth', {
       name?: string,
       photoURL?: string,
       userName?: string,
+      about?: string,
     }): Promise<void> {
       const auth = getAuth()
 
@@ -142,21 +160,23 @@ export const useAuth = defineStore('auth', {
       // it updates the auth:profile
       await updateProfile(auth.currentUser, {
         displayName: options?.name ?? '',
-        photoURL: options.photoURL ?? ''
+        photoURL: options.photoURL ?? '',
       }).then(() => {
         // if auth:updateProfile was successfull then we can create/update the profile doc in DB
         this.updateProfileDbDoc({
           photoURL: options.photoURL,
           name: options.name,
-          userName: options.userName
+          userName: options.userName,
+          about: options.about,
         })
 
-        // force reload to refresh the user info
         // TODO: any better solution to refresh user's info
         // TODO... custom claims specificaly
+        // TODO: reload with a warning before for a short period of time
+        // force reload to refresh the user info
         location.reload()
       }).catch((err) => {
-        console.log('x7 error: ', err)
+        console.log('x10 error: ', err)
       })
     },
 
@@ -164,6 +184,7 @@ export const useAuth = defineStore('auth', {
       name?: string,
       photoURL?: string,
       userName?: string,
+      about?: string,
     }): Promise<void> {
       // TODO: probably it is better to update profiles collection in  a furebase/function
 
@@ -175,12 +196,13 @@ export const useAuth = defineStore('auth', {
           data: {
             photoURL: options.photoURL,
             name: options.name,
-            userName: options.userName
-          }
-        }
+            userName: options.userName,
+            about: options.about,
+          },
+        },
       }).catch((e) => {
-        console.log('x9 err, ', e)
+        console.log('x11 err, ', e)
       })
-    }
-  }
+    },
+  },
 })

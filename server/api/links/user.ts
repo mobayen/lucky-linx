@@ -36,13 +36,13 @@ export default defineEventHandler(async (event) => {
           url: data.url,
           note: data.note,
 
-          metadata: massageMetadataAfterFetch(data.metadata)
+          metadata: massageMetadataAfterFetch(data.metadata),
         })
 
         links.push(newLink)
       })
     }).catch((error) => {
-      console.log('x10 error', error)
+      console.log('x7 error', error)
     })
 
   // throw createError({
@@ -51,6 +51,6 @@ export default defineEventHandler(async (event) => {
   // })
 
   return {
-    data: links
+    data: links,
   }
 })
