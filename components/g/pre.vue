@@ -1,7 +1,7 @@
 <template>
   <div class="bg-blue-500 text-gray-300/80 text-xs py-1 px-3 rounded overflow-auto text-left">
-    <strong>{{ title }}</strong>
-    <pre class=""><slot /></pre>
+    <span class="text-gray-700/60 underline font-semibold">{{ title }}</span>
+    <pre><slot /></pre>
   </div>
 </template>
 
