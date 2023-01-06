@@ -17,6 +17,7 @@ class User implements IUser {
   // costume claims
   public role: string | null = ''
   public userName: string | null = null
+  public about?: string | null = null
 
   constructor (user?: IUser) {
     // if user was undefined, keep the empty default values
@@ -24,15 +25,16 @@ class User implements IUser {
       return
     }
 
-    this.uid = user.uid
-    this.name = user.name
-    this.photoURL = user.photoURL
-    this.email = user.email
-    this.email_verified = user.email_verified
-    this.phone_number = user.phone_number
+    this.uid = user.uid ?? ''
+    this.name = user.name ?? ''
+    this.photoURL = user.photoURL ?? ''
+    this.email = user.email ?? ''
+    this.email_verified = user.email_verified ?? false
+    this.phone_number = user.phone_number ?? ''
     // custom claims
-    this.role = user.role
-    this.userName = user.userName
+    this.role = user.role ?? ''
+    this.userName = user.userName ?? ''
+    this.about = user.about ?? ''
   }
 
   toJSON (): IUser {
@@ -44,7 +46,8 @@ class User implements IUser {
       email_verified: this.email_verified,
       phone_number: this.phone_number,
       role: this.role,
-      userName: this.userName
+      userName: this.userName,
+      about: this.about,
     }
   }
 
@@ -55,14 +58,14 @@ class User implements IUser {
     const userName =
       isLength(this.userName ?? '', { min: 5, max: 64 }) &&
       isAlphanumeric(this.userName ?? '', 'en-US', {
-        ignore: '_'
+        ignore: '_',
       })
 
     return {
       name,
       userName,
 
-      _all: name && userName
+      _all: name && userName,
     }
   }
 }

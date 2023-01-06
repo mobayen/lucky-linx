@@ -11,6 +11,8 @@ interface IUser {
   // role?: string | null
 
   userName: string | null
+
+  about?: string | null
 }
 
 export default IUser
