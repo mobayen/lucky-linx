@@ -2,13 +2,19 @@
 import Link from '~~/models/Link'
 import ILink from '~~/types/ILink'
 
+/// VARIABLES ///
+const deletedLink = ref(false)
+
+/// PROPS ///
 const props =
 defineProps<{
   link: ILink
 }>()
 
+/// VARIABLE ///
 const theLink = new Link(props.link)
 
+/// COMPUTED PROPS ///
 const theURL = computed<URL | null>(() => {
   try {
     return new URL(theLink.url)
@@ -18,6 +24,14 @@ const theURL = computed<URL | null>(() => {
 
   return null
 })
+
+/// METHODS ///
+function removedLink (uid: string) {
+  // hide the linkBox
+  if (uid === theLink.uid) {
+    deletedLink.value = true
+  }
+}
 </script>
 
 <template>
@@ -63,25 +77,38 @@ const theURL = computed<URL | null>(() => {
       </div>
     </div>
 
-    <div class="text-sm mt-4 text-right text-gray-800/60">
-      <template v-if="theLink.createdAtFormatted">
-        {{ theLink.createdAtFormatted?.value }}
-        <br>
-      </template>
+    <div class="mt-4 pt-2 border-t">
+      <div v-if="deletedLink" class="bg-rose-500 text-white/80 py-1 px-2 rounded">
+        Deleted!
+      </div>
+      <div v-else class="flex gap-2">
+        <div class="flex-1">
+          <authLinkControl
+            :link="theLink"
+            @delete="removedLink"
+          />
+        </div>
+        <div class="text-sm text-right text-gray-800/60">
+          <template v-if="theLink.createdAtFormatted">
+            {{ theLink.createdAtFormatted?.value }}
+            <br>
+          </template>
 
-      <template v-if="theLink.metadata?.createdBy.userName">
-        by
-        <NuxtLink :to="`/@${theLink.metadata?.createdBy.userName}`">
-          <strong>{{ theLink.metadata?.createdBy.name }}</strong>
-        </NuxtLink>
-      </template>
-      <span v-else-if="theLink.metadata?.createdBy.name">
-        by
-        {{ theLink.metadata?.createdBy.name }}
-      </span>
-      <strong v-else>
-        ¯\_(ツ)_/¯
-      </strong>
+          <template v-if="theLink.metadata?.createdBy.userName">
+            by
+            <NuxtLink :to="`/@${theLink.metadata?.createdBy.userName}`">
+              <strong>{{ theLink.metadata?.createdBy.name }}</strong>
+            </NuxtLink>
+          </template>
+          <span v-else-if="theLink.metadata?.createdBy.name">
+            by
+            {{ theLink.metadata?.createdBy.name }}
+          </span>
+          <strong v-else>
+            ¯\_(ツ)_/¯
+          </strong>
+        </div>
+      </div>
     </div>
   </div>
 </template>
