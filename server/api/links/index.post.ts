@@ -24,14 +24,14 @@ export default defineEventHandler(async (event) => {
   if (!v._all) {
     throw createError({
       statusCode: 406,
-      message: 'The Link object is not valid'
+      message: 'The Link object is not valid',
     })
   }
 
   await db.collection('links')
     .add({
       ...linkObj.toJSON(),
-      metadata: prepareDocMetadataBeforeWrite(event)
+      metadata: prepareDocMetadataBeforeWrite(event),
     })
     .then((docRef) => {
       docId = docRef.id
@@ -40,6 +40,6 @@ export default defineEventHandler(async (event) => {
   // TODO: how to return with an http status/error
   // TODO... setResponseStatus(404, 'custom response')
   return {
-    uid: docId
+    uid: docId,
   }
 })

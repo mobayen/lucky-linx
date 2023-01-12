@@ -70,12 +70,12 @@ const error = ref()
 const linkObj = reactive(new Link({
   title: '',
   url: '',
-  note: ''
+  note: '',
 }))
 
 //
 definePageMeta({
-  layout: 'my'
+  layout: 'my',
 })
 
 /// COMPUTED PROPS ///
@@ -94,11 +94,11 @@ async function submit () {
   error.value = null
   data.value = null
 
-  await $fetch('/api/links/write', {
+  await $fetch('/api/links', {
     method: 'POST',
     body: {
-      data: linkObj.toJSON()
-    }
+      data: linkObj.toJSON(),
+    },
   }).then((res) => {
     data.value = res.uid
   }).catch((err) => {

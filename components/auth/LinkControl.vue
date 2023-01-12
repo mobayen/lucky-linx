@@ -32,7 +32,7 @@ async function remove () {
   const confirmDelete = await confirm('You are deleting the link!')
 
   if (confirmDelete) {
-    await $fetch('/api/links/delete', {
+    await $fetch('/api/links', {
       method: 'DELETE',
       body: {
         link: props.link,
