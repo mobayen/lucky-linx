@@ -69,10 +69,10 @@ export const useAuth = defineStore('auth', {
         (user.displayName ?? '') !== this.user?.name ||
         (user.email ?? '') !== this.user?.email ||
         user.emailVerified !== this.user?.email_verified ||
-        (user.phoneNumber ?? '') !== this.user.phone_number ||
+        (user.phoneNumber ?? '') !== this.user?.phone_number ||
         (user.photoURL ?? '') !== this.user?.photoURL ||
-        (idTokenResult.claims.role ?? '') !== this.user.role ||
-        (idTokenResult.claims.userName ?? '') !== this.user.userName
+        (idTokenResult.claims.role ?? '') !== this.user?.role ||
+        (idTokenResult.claims.userName ?? '') !== this.user?.userName
       ) {
         // TODO: display what do not match??
 
