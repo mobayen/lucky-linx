@@ -61,8 +61,14 @@ const links = computed(() => {
   return temp
 })
 
+/// METATAGS ///
+useHead({
+  title: userBrief.value.name + ' (@' + userBrief.value.userName + ') / LuckyLinx',
+  meta: [
+    {
+      name: 'description',
+      content: userBrief.value.about ?? '',
+    },
+  ],
+})
 </script>
-
-<style scoped>
-
-</style>
