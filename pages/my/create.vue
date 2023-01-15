@@ -36,25 +36,23 @@
       <div class="h-4" />
 
       <div class="flex justify-center">
-        <gButton value="this is a button" type="submit">
+        <div v-if="pending">
+          Pending...
+        </div>
+        <gButton v-else value="this is a button" type="submit">
           Submit
         </gButton>
       </div>
     </form>
 
-    <div class="bg-red-400">
-      validate;
-      <pre>{{ valid }}</pre>
-    </div>
-
-    <pre v-if="pending" class="bg-red-400"> pending... </pre>
-    <pre v-else class="bg-green-400">DONE!</pre>
+    <div class="m-4" />
 
     <!-- TODO: create an alert/error component -->
-    <div class="bg-yellow-300">
-      doc id: {{ data }}
+    <div v-if="docUId" class="bg-yellow-300 p-2 rounded">
+      Last document has created: {{ docUId }}
     </div>
-    <div class="bg-purple-300">
+
+    <div v-if="error" class="bg-purple-300">
       error: {{ error }}
     </div>
   </div>
@@ -64,7 +62,7 @@
 import Link from '~~/models/Link'
 
 const pending = ref(false)
-const data = ref()
+const docUId = ref()
 const error = ref()
 
 const linkObj = reactive(new Link({
@@ -92,7 +90,7 @@ async function submit () {
 
   pending.value = true
   error.value = null
-  data.value = null
+  docUId.value = null
 
   await $fetch('/api/links', {
     method: 'POST',
@@ -100,7 +98,7 @@ async function submit () {
       data: linkObj.toJSON(),
     },
   }).then((res) => {
-    data.value = res.uid
+    docUId.value = res.uid
   }).catch((err) => {
     error.value = err
   }).finally(() => {
