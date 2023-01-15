@@ -49,7 +49,7 @@
 
     <!-- TODO: create an alert/error component -->
     <div v-if="docUId" class="bg-yellow-300 p-2 rounded">
-      Last document has created: {{ docUId }}
+      Just created: {{ docUId }}
     </div>
 
     <div v-if="error" class="bg-purple-300">
@@ -92,7 +92,7 @@ async function submit () {
   error.value = null
   docUId.value = null
 
-  await $fetch('/api/links', {
+  await $fetch('/api/links/write', {
     method: 'POST',
     body: {
       data: linkObj.toJSON(),
