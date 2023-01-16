@@ -9,6 +9,7 @@
         border rounded focus:border-gray-400/80
         focus:outline-none text-lg bg-gray-200/50 focus:bg-gray-200/80 "
       :value="modelValue"
+      :placeholder="placeholder"
       @input="onInput"
     />
   </div>
@@ -21,11 +22,13 @@
 interface props {
   modelValue?: string | number | string[] | undefined,
   label?: string
+  placeholder?: string
 }
 
 withDefaults(defineProps<props>(), {
   modelValue: '',
-  label: ''
+  label: '',
+  placeholder: '',
 })
 
 // EMIT //
