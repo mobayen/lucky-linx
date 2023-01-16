@@ -1,13 +1,5 @@
 {
   "projects": {
     "default": "lucky-linx"
-  },
-  "targets": {},
-  "etags": {
-    "lucky-linx": {
-      "extensionInstances": {
-        "firestore-algolia-search": "949fdf946a633fd30ad54e1ede400725ff8e25084c8cc0bcdfe064f58149a384"
-      }
-    }
   }
 }
