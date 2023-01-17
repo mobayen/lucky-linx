@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!user.uid) {
     throw createError({
       statusCode: 401,
-      message: 'You are not allowed to see this page'
+      message: 'You are not allowed to see this page',
     })
   }
 
@@ -46,8 +46,9 @@ export default defineEventHandler(async (event) => {
           title: data.title,
           url: data.url,
           note: data.note,
+          tags: data.tags,
 
-          metadata: massageMetadataAfterFetch(data.metadata)
+          metadata: massageMetadataAfterFetch(data.metadata),
         })
 
         links.push(newLink)
@@ -63,6 +64,6 @@ export default defineEventHandler(async (event) => {
 
   return {
     data: links,
-    error: 'no error yet'
+    error: 'no error yet',
   }
 })

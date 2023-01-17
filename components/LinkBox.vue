@@ -77,6 +77,18 @@ function removedLink (uid: string) {
       </div>
     </div>
 
+    <div class="my-2">
+      <div
+        v-for="t in theLink.tags"
+        :key="t"
+        class="badge bg-stone-300 text-stone-600 m-px"
+      >
+        <NuxtLink :to="`/tags/${t}`">
+          {{ t }}
+        </NuxtLink>
+      </div>
+    </div>
+
     <div class="mt-4 pt-2 border-t">
       <div v-if="deletedLink" class="bg-rose-500 text-white/80 py-1 px-2 rounded">
         Deleted!

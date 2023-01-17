@@ -7,6 +7,7 @@ interface ILink {
   title: string
   url: string
   note?: string
+  tags?: string[]
 }
 
 export default ILink

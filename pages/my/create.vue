@@ -33,6 +33,8 @@
 
       <gTextArea v-model="linkObj.note" label="Note" class="my-4" />
 
+      <gTag v-model="linkObj.tags" label="Tag x " placeholder="create a tag" />
+
       <div class="h-4" />
 
       <div class="flex justify-center">
@@ -69,6 +71,7 @@ const linkObj = reactive(new Link({
   title: '',
   url: '',
   note: '',
+  tags: [],
 }))
 
 //

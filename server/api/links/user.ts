@@ -65,6 +65,7 @@ export default defineEventHandler(async (event) => {
           title: data.title,
           url: data.url,
           note: data.note,
+          tags: data.tags,
 
           metadata: massageMetadataAfterFetch(data.metadata),
         })

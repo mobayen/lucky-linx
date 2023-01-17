@@ -16,6 +16,7 @@ class Link implements ILink {
   public title: string
   public url = ''
   public note?: string
+  public tags?: string[]
 
   constructor (link: ILink) {
     this.uid = link.uid
@@ -24,6 +25,7 @@ class Link implements ILink {
     this.title = link.title
     this.url = link.url
     this.note = link.note
+    this.tags = link.tags
   }
 
   /**
@@ -36,7 +38,8 @@ class Link implements ILink {
 
       url: this.url,
       title: this.title?.trim(),
-      note: this.note?.trim()
+      note: this.note?.trim(),
+      tags: this.tags,
     }
 
     // not to include the UID if it's not needed or does not exist
@@ -61,7 +64,7 @@ class Link implements ILink {
       url,
       title,
 
-      _all: url
+      _all: url && title,
     }
   }
 
