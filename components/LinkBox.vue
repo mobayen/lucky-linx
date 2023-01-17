@@ -77,14 +77,16 @@ function removedLink (uid: string) {
       </div>
     </div>
 
-    <div class="my-2">
+    <div v-if="theLink.tags?.length" class="flex items-start my-2">
+      <gIcon icon="tag" class="text-gray-600/50 pr-2 " />
+
       <div
         v-for="t in theLink.tags"
         :key="t"
         class="badge bg-stone-300 text-stone-600 m-px"
       >
         <NuxtLink :to="`/tags/${t}`">
-          {{ t }}
+          <span class="text-gray-600/70">#</span>{{ t }}
         </NuxtLink>
       </div>
     </div>
