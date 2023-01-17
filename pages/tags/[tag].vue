@@ -1,23 +1,35 @@
 <script setup lang="ts">
 const route = useRoute()
 const tag = route.params.tag
+const links = ref()
+
+await $fetch('/api/tags/find', {
+  params: { tag, limit: 10 },
+}).then((data) => {
+  links.value = data.data
+}).catch((error) => {
+  console.log('x14 error', error)
+})
 </script>
 
 <template>
   <div>
-    <div class="text-5xl text-center mb-20 mt-10">
-      {{ tag }}
+    <div class="text-center mb-20 mt-10">
+      <h1 class="text-5xl mb-5">
+        <span class="text-gray-600/70">#</span>{{ tag }}
+      </h1>
+      <p class="text-gray-600/70">
+        You are viewing the most recently added links.
+      </p>
     </div>
 
     <div>
-      <p>
-        links with the
-        <strong>"{{ tag }}"</strong>
-        hashtag will be listed here.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, laudantium? Dolorem, sequi quaerat. Inventore enim dolor qui animi deserunt vero sequi laudantium, error doloremque non illum architecto, aperiam ea. Repellat?
-      </p>
+      <LinkBox
+        v-for="item in links"
+        :key="item.uid"
+        :link="item"
+        class="my-2"
+      />
     </div>
   </div>
 </template>
