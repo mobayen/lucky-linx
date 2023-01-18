@@ -1,4 +1,19 @@
 <script setup lang="ts">
+const route = useRoute()
+const config = useRuntimeConfig()
+
+const { appTitle, rootUrl } = config.public
+
+/// SEO ///
+useHead({
+  titleTemplate: '%s | ' + appTitle,
+  link: [
+    {
+      rel: 'canonical',
+      href: rootUrl + route.fullPath,
+    },
+  ],
+})
 </script>
 
 <template>

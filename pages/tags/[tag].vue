@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
-const tag = route.params.tag
+
+const { tag } = route.params
 const links = ref()
 
 await $fetch('/api/tags/find', {
@@ -9,6 +10,17 @@ await $fetch('/api/tags/find', {
   links.value = data.data
 }).catch((error) => {
   console.log('x14 error', error)
+})
+
+/// SEO ///
+useHead({
+  title: '# ' + tag,
+  meta: [
+    {
+      name: 'keywords',
+      content: tag,
+    },
+  ],
 })
 </script>
 

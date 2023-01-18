@@ -61,9 +61,9 @@ const links = computed(() => {
   return temp
 })
 
-/// METATAGS ///
+/// SEO ///
 useHead({
-  title: userBrief.value.name + ' (@' + userBrief.value.userName + ') / LuckyLinx',
+  title: userBrief.value.name + ' (@' + userBrief.value.userName + ')',
   meta: [
     {
       name: 'description',
