@@ -40,5 +40,6 @@ export default defineEventHandler(async (event) => {
 
   return {
     data: links,
+    error: '',
   }
 })
