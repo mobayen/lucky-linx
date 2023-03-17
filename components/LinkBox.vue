@@ -40,49 +40,42 @@ function removedLink (uid: string) {
     p-2 pb-1 lg:p-6 lg:pb-2
   hover:border-gray-400/50 hover:bg-gray-400/20 hover:shadow-lg"
   >
-    <div>
-      <a :href="theLink.url">
-        <div class="flex items-center">
+    <div class="flex items-center my-2">
+      <gIcon class="text-gray-600/60 pr-2" icon="link" />
 
-          <gIcon class="text-gray-600/60 pr-2" icon="link" />
-
-          <h3 class="text-xl text-gray-600">
-            {{ theLink.title }}
-          </h3>
-        </div>
-
-        <div class="flex items-center">
-          <gIcon class="text-gray-600/60 pr-2" icon="home" />
-
-          <h4 v-if="theURL" class="truncate text-gray-300 ">
-            <span class="text-gray-400 ">
-              {{ theURL.hostname }}
-            </span>
-            <span class="text-gray-300 text-sm">
-              {{ theURL.pathname }}
-            </span>
-            <span class="text-gray-300 text-sm">
-              {{ theURL.search }}
-            </span>
-          </h4>
-        </div>
-      </a>
+      <h3 class="text-xl text-gray-600 border-l-2 pl-2">
+        {{ theLink.title }}
+      </h3>
     </div>
 
-    <div v-if="theLink.note" class="flex items-start mt-2">
+    <a :href="theLink.url" class="flex items-center my-2">
+      <gIcon class="text-gray-600/60 pr-2" icon="home" />
+
+      <h4 v-if="theURL" class="truncate text-gray-300  border-l-2 pl-2">
+        <span class="text-gray-400 ">
+          {{ theURL.hostname }}
+        </span>
+        <span class="text-gray-300 text-sm">
+          {{ theURL.pathname }}
+        </span>
+        <span class="text-gray-300 text-sm">
+          {{ theURL.search }}
+        </span>
+      </h4>
+    </a>
+
+    <div v-if="theLink.note" class="flex items-start my-2">
       <gIcon class="text-gray-600/50 pr-2" />
 
-      <div class="whitespace-pre-line">
+      <div class="whitespace-pre-line  border-l-2 pl-2">
         {{ theLink.note }}
       </div>
     </div>
 
     <div v-if="theLink.tags?.length" class="flex items-center my-2">
-      <div>
-        <gIcon icon="tag" class="text-gray-600/50 pr-2" />
-      </div>
+      <gIcon icon="tag" class="text-gray-600/50 pr-2" />
 
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap border-l-2 pl-2">
         <div
           v-for="t in theLink.tags"
           :key="t"
