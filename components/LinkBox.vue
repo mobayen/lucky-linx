@@ -42,16 +42,16 @@ function removedLink (uid: string) {
   >
     <div>
       <a :href="theLink.url">
-        <div class="flex items-end">
+        <div class="flex items-center">
 
           <gIcon class="text-gray-600/60 pr-2" icon="link" />
 
-          <h3 class="text-xl text-gray-600  ">
+          <h3 class="text-xl text-gray-600">
             {{ theLink.title }}
           </h3>
         </div>
 
-        <div class="flex items-end">
+        <div class="flex items-center">
           <gIcon class="text-gray-600/60 pr-2" icon="home" />
 
           <h4 v-if="theURL" class="truncate text-gray-300 ">
@@ -77,17 +77,21 @@ function removedLink (uid: string) {
       </div>
     </div>
 
-    <div v-if="theLink.tags?.length" class="flex items-start my-2">
-      <gIcon icon="tag" class="text-gray-600/50 pr-2 " />
+    <div v-if="theLink.tags?.length" class="flex items-center my-2">
+      <div>
+        <gIcon icon="tag" class="text-gray-600/50 pr-2" />
+      </div>
 
-      <div
-        v-for="t in theLink.tags"
-        :key="t"
-        class="badge bg-stone-300 text-stone-600 m-px"
-      >
-        <NuxtLink :to="`/tags/${t}`">
-          <span class="text-gray-600/70">#</span>{{ t }}
-        </NuxtLink>
+      <div class="flex flex-wrap">
+        <div
+          v-for="t in theLink.tags"
+          :key="t"
+          class="badge bg-stone-300 text-stone-600 m-px whitespace-nowrap"
+        >
+          <NuxtLink :to="`/tags/${t}`">
+            <span class="text-gray-600/70">#</span>{{ t }}
+          </NuxtLink>
+        </div>
       </div>
     </div>
 
