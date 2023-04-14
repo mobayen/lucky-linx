@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
+import { getAnalytics } from 'firebase/analytics'
 import { useAuth } from '~/stores/authStore'
 
 export default defineNuxtPlugin((_nuxtApp) => {
@@ -13,7 +14,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     storageBucket: config.public.firebaseConfig.storageBucket,
     messagingSenderId: config.public.firebaseConfig.messagingSenderId,
     appId: config.public.firebaseConfig.appId,
-    measurementId: config.public.firebaseConfig.measurementId
+    measurementId: config.public.firebaseConfig.measurementId,
   }
 
   const app = initializeApp(firebaseConfig)
@@ -22,6 +23,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
   useAuth().initUser()
 
   const auth = getAuth(app)
+  getAnalytics(app)
 
   if (process.env.NODE_ENV === 'development') {
     connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
